@@ -78,7 +78,6 @@ export function ProjectVisual({ project }: ProjectVisualProps) {
             {project.visual === 'ecommerce' && <EcommercePreview accent={accent} />}
             {project.visual === 'cinema' && <CinemaPreview accent={accent} />}
             {project.visual === 'saas' && <SaasPreview accent={accent} />}
-            {project.visual === 'disc' && <DiscPreview accent={accent} />}
             {project.visual === 'placeholder' && <PlaceholderPreview accent={accent} />}
           </div>
         )}
@@ -166,43 +165,6 @@ function SaasPreview({ accent }: { accent: Accent }) {
         <div className="h-5 w-5 rounded-full bg-white/5" />
         <div className="h-1.5 flex-1 rounded-full bg-white/5" />
         <div className="h-1.5 w-8 rounded-full bg-white/5" />
-      </div>
-    </div>
-  )
-}
-
-const DISC_SCORES = [
-  { label: 'D', score: 82 },
-  { label: 'I', score: 64 },
-  { label: 'S', score: 38 },
-  { label: 'C', score: 71 },
-]
-
-function DiscPreview({ accent }: { accent: Accent }) {
-  return (
-    <div className="flex h-full flex-col justify-between gap-3">
-      <div className="flex flex-col gap-2 rounded-lg border border-white/[0.06] bg-card p-3">
-        {DISC_SCORES.map(({ label, score }) => (
-          <div key={label} className="flex items-center gap-2">
-            <span className={cn('flex h-4 w-4 items-center justify-center rounded font-mono text-[9px]', accent.chip)}>
-              {label}
-            </span>
-            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/5">
-              <div className={cn('h-full rounded-full bg-gradient-to-r', accent.bar)} style={{ width: `${score}%` }} />
-            </div>
-            <span className="w-6 text-right font-mono text-[9px] text-text-muted">{score}</span>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex items-center gap-2">
-        <div className="flex-1 rounded-lg border border-white/[0.06] bg-card px-2.5 py-1.5">
-          <p className="font-mono text-[9px] text-text-muted">Atlas RH</p>
-        </div>
-        <div className="flex-1 rounded-lg border border-white/[0.06] bg-card px-2.5 py-1.5">
-          <p className="font-mono text-[9px] text-text-muted">Connect Valley</p>
-        </div>
-        <div className={cn('rounded-full px-2.5 py-1 font-mono text-[9px]', accent.chip)}>webhook 200</div>
       </div>
     </div>
   )

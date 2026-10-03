@@ -28,7 +28,7 @@ export interface Project {
   links: ProjectLinks
   accent: 'violet' | 'cyan' | 'amber' | 'emerald' | 'sky' | 'rose'
   /** Usado como fallback visual quando não há `image`. */
-  visual?: 'ecommerce' | 'cinema' | 'saas' | 'disc' | 'placeholder'
+  visual?: 'ecommerce' | 'cinema' | 'saas' | 'placeholder'
   /** Screenshot real do projeto (caminho em /public). Tem prioridade sobre `visual`. */
   image?: string
   /** Nota de colaboração, quando o projeto foi construído com outra pessoa. */

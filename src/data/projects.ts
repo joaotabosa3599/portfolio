@@ -117,7 +117,7 @@ export const projects: Project[] = [
       live: 'https://mapa-disc.vercel.app',
     },
     accent: 'violet',
-    visual: 'disc',
+    image: '/projects/mapa-disc.jpg',
     caseStudy: {
       overview:
         'O Mapa DISC aplica inventários comportamentais (DISC, motivadores de Spranger e forças), calcula o perfil de cada pessoa e devolve o resultado tanto a quem respondeu quanto ao sistema que pediu a avaliação. Não é um módulo de um app só: é uma capacidade compartilhada do grupo, hoje atendendo Atlas RH e Connect Valley.',
