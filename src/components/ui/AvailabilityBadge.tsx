@@ -14,7 +14,7 @@ export function AvailabilityBadge({ label, className }: AvailabilityBadgeProps) 
       )}
     >
       <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+        <span className="badge-pulse absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
       </span>
       {label}

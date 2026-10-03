@@ -112,6 +112,72 @@
     text-wrap: balance;
   }
 
+  /* Pista que percorre o indicador de scroll. */
+  .hero-scroll-trail::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 40%;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, transparent, var(--color-accent-light));
+    animation: hero-scroll-trail 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  /* Brilho que cruza o CTA principal no hover. Fica acima do fundo do botão e
+     abaixo do rótulo, para iluminar sem lavar o texto. */
+  .cta-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.3) 50%, transparent 62%);
+    transform: translateX(-120%);
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cta-sheen:hover::after {
+    transform: translateX(120%);
+  }
+  .cta-sheen > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Pulso do selo de disponibilidade: mais lento e mais discreto que o ping padrão. */
+  .badge-pulse {
+    animation: badge-pulse 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+  @keyframes badge-pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(2.6);
+      opacity: 0;
+    }
+  }
+
+  @keyframes hero-scroll-trail {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    35% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(250%);
+      opacity: 0;
+    }
+  }
+
   .bg-noise {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   }
