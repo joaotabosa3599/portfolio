@@ -102,6 +102,103 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'mapa-disc',
+    slug: 'mapa-disc',
+    title: 'Mapa DISC',
+    tagline:
+      'Serviço central de inventários comportamentais do grupo: aplica o teste, calcula o perfil e entrega o resultado a vários sistemas consumidores via API e webhook assinado.',
+    category: 'Web App',
+    featured: false,
+    isPlaceholder: false,
+    kind: 'corporate',
+    role: 'Estagiário de Desenvolvimento na RF Group',
+    tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Webhooks', 'HMAC'],
+    links: {
+      live: 'https://mapa-disc.vercel.app',
+    },
+    accent: 'violet',
+    visual: 'disc',
+    caseStudy: {
+      overview:
+        'O Mapa DISC aplica inventários comportamentais (DISC, motivadores de Spranger e forças), calcula o perfil de cada pessoa e devolve o resultado tanto a quem respondeu quanto ao sistema que pediu a avaliação. Não é um módulo de um app só: é uma capacidade compartilhada do grupo, hoje atendendo Atlas RH e Connect Valley.',
+      problem:
+        'Cada sistema do grupo precisava de avaliação comportamental, e replicar o questionário e o cálculo em cada um levaria a três versões divergentes da mesma regra. O desafio era expor isso como um serviço único, sem que o DISC precisasse conhecer o vocabulário de nenhum consumidor nem ser reescrito a cada novo sistema plugado.',
+      process:
+        'Desenhei o DISC como um bounded context fechado: todo o dado e o cálculo moram em um schema próprio no Postgres, sem nenhum GRANT de tabela para fora — acesso direto responde 42501, por desenho. Os consumidores falam apenas por RPCs, e a identidade externa viaja opaca (uma referência como pessoa:<uuid>), então o serviço nunca passa a conhecer o domínio de quem o chama. A decisão de arquitetura (hub-and-spoke, DISC como provider) está registrada em ADR no repositório.',
+      solution:
+        'Cada avaliação nasce de uma emissão server-to-server autenticada por API key e gera um link único (/teste/<token>) com validade de 1 a 90 dias. A pessoa responde sem login — o token é a única credencial e o banco guarda apenas o hash. Na conclusão, o servidor apura os scores em escala 0–100 por dimensão, devolve a leitura do próprio estilo ao respondente e o mapa com fit ao cargo ao operador, e dispara um webhook assinado para o sistema de origem puxar o resultado.',
+      technologies: [
+        'Next.js',
+        'TypeScript',
+        'Supabase (Postgres + Vault)',
+        'Schema isolado com acesso só por RPC',
+        'API keys com digest SHA-256',
+        'Webhook assinado (HMAC-SHA256)',
+        'Dedupe por evento, backoff e dead-letter',
+        'Vercel',
+      ],
+      challenges:
+        'Fechar a fronteira do contexto sem travar a integração: nenhum consumidor lê tabela do DISC, então todo o contrato (emissão, leitura, conclusão) precisou caber em RPCs versionadas e em um webhook à prova de replay — assinatura HMAC sobre timestamp e corpo, janela de ±300s, dedupe por evento e retentativa com backoff e dead-letter. E manter a página do respondente aberta sem login com o token como única credencial, armazenando apenas o hash.',
+      result:
+        'Em produção e operacional, com dois consumidores integrados: Atlas RH e Connect Valley, este último provado de ponta a ponta (emissão → resposta → webhook 200 → leitura). A ponte é fina e padronizada o bastante para plugar o CRM e futuros consumidores sem reescrita.',
+      gallerySteps: [
+        'Emissão do convite com link e token',
+        'Teste respondido sem login',
+        'Cálculo do perfil e fit ao cargo',
+        'Webhook assinado para o sistema de origem',
+      ],
+    },
+  },
+  {
+    id: 'central-chamados',
+    slug: 'central-chamados',
+    title: 'Central de Chamados RFG',
+    tagline:
+      'Sistema interno de chamados do R. Feitosa Group: abertura sem login, prazos por urgência, painel do time e indicadores, acionável de dentro de qualquer sistema do grupo.',
+    category: 'Web App',
+    featured: false,
+    isPlaceholder: false,
+    kind: 'corporate',
+    role: 'Estagiário de Desenvolvimento na RF Group',
+    tech: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'Vitest'],
+    links: {
+      live: 'https://chamado-jdc5.vercel.app',
+    },
+    accent: 'cyan',
+    image: '/projects/central-chamados.jpg',
+    caseStudy: {
+      overview:
+        'A Central de Chamados é o canal interno de suporte do R. Feitosa Group: qualquer colaborador abre um chamado quando um sistema ou equipamento dá problema, e o time de desenvolvimento e suporte assume e resolve com prazos acordados e indicadores de atendimento.',
+      problem:
+        'Abrir um chamado precisava ser imediato — sem login, sem cadastro, em menos de um minuto — e ao mesmo tempo gerar registro rastreável, prazo acordado e indicadores para o time. Além disso, o chamado precisava poder nascer de dentro de qualquer sistema do grupo, já sabendo quem é a pessoa e de onde ela veio.',
+      process:
+        'Construí em React 18 com Vite e TypeScript, sem framework de UI: CSS próprio com tema claro/escuro. Toda a regra de negócio vive em funções puras cobertas por testes (prazos, ordenação da fila, indicadores, validação de anexos, leitura do token de convite), e as permissões do banco são testadas em um Postgres descartável antes de qualquer envio. No Supabase, nenhuma tabela é legível por quem não está logado: a superfície pública inteira são funções security definer.',
+      solution:
+        'Sem login, o colaborador escolhe setor e nome, aponta onde está o problema, descreve, anexa até três prints e define a urgência — e recebe um protocolo com os dois prazos já congelados. A aba Acompanhar consulta pelo protocolo e devolve situação, responsável e prazos, nunca a descrição. O time tem painel com fila ordenada pelo prazo que está correndo, ações de assumir, resolver e reabrir, marcação de atrasados e percentual no prazo, além de uma tela de indicadores por técnico, sistema e setor. Um botão "Abrir chamado" instalado no Atlas Hub emite um token que já traz nome, setor e sistema de origem preenchidos.',
+      technologies: [
+        'React 18',
+        'TypeScript',
+        'Vite',
+        'Supabase (Postgres, Auth, Storage, Realtime)',
+        'RPCs security definer + RLS',
+        'Storage privado com link assinado',
+        'Vitest (47 testes)',
+        'Testes de permissão em Postgres local',
+        'Vercel',
+      ],
+      challenges:
+        'Deixar a porta aberta sem deixar o banco exposto: como qualquer pessoa abre chamado sem autenticar, anon não lê tabela nenhuma — tudo passa por funções com limite de abertura por pessoa e no total, prints vão para um bucket privado e a consulta por protocolo nunca devolve a descrição. Os prazos, calculados por gatilho a partir da urgência e do grupo responsável, ficam congelados na abertura para que o indicador seja auditável depois.',
+      result:
+        'Em produção atendendo o grupo, com o botão de abertura já integrado ao Atlas Hub e a fila do time rodando sobre atualizações em tempo real. As regras críticas — prazos, ordenação da fila e indicadores — são cobertas por 47 testes automatizados, e as permissões do banco têm sua própria suíte.',
+      gallerySteps: [
+        'Abertura em menos de um minuto, sem login',
+        'Protocolo e prazos por urgência',
+        'Painel do time com fila e SLA',
+        'Indicadores por técnico, sistema e setor',
+      ],
+    },
+  },
+  {
     id: 'goup-training',
     slug: 'goup-training',
     title: 'GoUp Training',
