@@ -150,6 +150,55 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'central-chamados',
+    slug: 'central-chamados',
+    title: 'Central de Chamados RFG',
+    tagline:
+      'Sistema interno de chamados do R. Feitosa Group: abertura sem login, prazos por urgência, painel do time e indicadores, acionável de dentro de qualquer sistema do grupo.',
+    category: 'Web App',
+    featured: false,
+    isPlaceholder: false,
+    kind: 'corporate',
+    role: 'Estagiário de Desenvolvimento na RF Group',
+    tech: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'Vitest'],
+    links: {
+      live: 'https://chamado-jdc5.vercel.app',
+    },
+    accent: 'cyan',
+    image: '/projects/central-chamados.jpg',
+    caseStudy: {
+      overview:
+        'A Central de Chamados é o canal interno de suporte do R. Feitosa Group: qualquer colaborador abre um chamado quando um sistema ou equipamento dá problema, e o time de desenvolvimento e suporte assume e resolve com prazos acordados e indicadores de atendimento.',
+      problem:
+        'Abrir um chamado precisava ser imediato — sem login, sem cadastro, em menos de um minuto — e ao mesmo tempo gerar registro rastreável, prazo acordado e indicadores para o time. Além disso, o chamado precisava poder nascer de dentro de qualquer sistema do grupo, já sabendo quem é a pessoa e de onde ela veio.',
+      process:
+        'Construí em React 18 com Vite e TypeScript, sem framework de UI: CSS próprio com tema claro/escuro. Toda a regra de negócio vive em funções puras cobertas por testes (prazos, ordenação da fila, indicadores, validação de anexos, leitura do token de convite), e as permissões do banco são testadas em um Postgres descartável antes de qualquer envio. No Supabase, nenhuma tabela é legível por quem não está logado: a superfície pública inteira são funções security definer.',
+      solution:
+        'Sem login, o colaborador escolhe setor e nome, aponta onde está o problema, descreve, anexa até três prints e define a urgência — e recebe um protocolo com os dois prazos já congelados. A aba Acompanhar consulta pelo protocolo e devolve situação, responsável e prazos, nunca a descrição. O time tem painel com fila ordenada pelo prazo que está correndo, ações de assumir, resolver e reabrir, marcação de atrasados e percentual no prazo, além de uma tela de indicadores por técnico, sistema e setor. Um botão "Abrir chamado" instalado no Atlas Hub emite um token que já traz nome, setor e sistema de origem preenchidos.',
+      technologies: [
+        'React 18',
+        'TypeScript',
+        'Vite',
+        'Supabase (Postgres, Auth, Storage, Realtime)',
+        'RPCs security definer + RLS',
+        'Storage privado com link assinado',
+        'Vitest (47 testes)',
+        'Testes de permissão em Postgres local',
+        'Vercel',
+      ],
+      challenges:
+        'Deixar a porta aberta sem deixar o banco exposto: como qualquer pessoa abre chamado sem autenticar, anon não lê tabela nenhuma — tudo passa por funções com limite de abertura por pessoa e no total, prints vão para um bucket privado e a consulta por protocolo nunca devolve a descrição. Os prazos, calculados por gatilho a partir da urgência e do grupo responsável, ficam congelados na abertura para que o indicador seja auditável depois.',
+      result:
+        'Em produção atendendo o grupo, com o botão de abertura já integrado ao Atlas Hub e a fila do time rodando sobre atualizações em tempo real. As regras críticas — prazos, ordenação da fila e indicadores — são cobertas por 47 testes automatizados, e as permissões do banco têm sua própria suíte.',
+      gallerySteps: [
+        'Abertura em menos de um minuto, sem login',
+        'Protocolo e prazos por urgência',
+        'Painel do time com fila e SLA',
+        'Indicadores por técnico, sistema e setor',
+      ],
+    },
+  },
+  {
     id: 'goup-training',
     slug: 'goup-training',
     title: 'GoUp Training',
