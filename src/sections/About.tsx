@@ -1,41 +1,51 @@
-import { motion } from 'framer-motion'
+import { FadeIn } from '@/components/ui/Reveal'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Timeline } from '@/components/ui/Timeline'
-import { journeyTimeline } from '@/data/experience'
+import { site } from '@/data/site'
 
+/**
+ * Composição editorial e quase parada: headline forte, texto curto e três
+ * fatos. É o silêncio depois do showcase — o próximo movimento vem na stack.
+ */
 export function About() {
   return (
-    <section id="sobre" className="border-t border-border py-28 sm:py-36">
+    <section id="sobre" className="py-24 sm:py-32">
       <div className="mx-auto max-w-content px-6 sm:px-8">
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div>
-            <SectionHeading eyebrow="Sobre mim" title="Quem constrói esses produtos" />
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
+          <SectionHeading index="02" eyebrow="Sobre" title={['Penso o produto', 'inteiro.']} />
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-6 space-y-4 text-base leading-relaxed text-text-secondary sm:text-lg"
-            >
-              <p>
-                João Tabosa é desenvolvedor Full-Stack e estudante de Engenharia da Computação na UFC. Começou focado
-                em front-end, mas construir aplicações do zero (banco de dados, autenticação, APIs em tempo real e a
-                interface) o levou para o full-stack de verdade. Hoje pensa em produto de ponta a ponta, da
-                modelagem do schema até a última animação da UI.
+          <div className="lg:pt-14">
+            <FadeIn>
+              <p className="text-lg leading-relaxed text-text sm:text-xl">
+                Comecei pelo front-end. Construir aplicações do zero — banco, autenticação, APIs em tempo real e a
+                interface — me levou ao full-stack de verdade. Hoje penso em produto de ponta a ponta: da modelagem
+                do schema até a última animação da UI.
               </p>
-              <p>
-                Gosta de unir design minimalista com engenharia sólida: código fácil de ler tanto quanto de usar.
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="mt-6 text-base leading-relaxed text-text-secondary">
+                Gosto de unir design minimalista com engenharia sólida: código fácil de ler tanto quanto de usar.
               </p>
-            </motion.div>
-          </div>
+            </FadeIn>
 
-          <div>
-            <h3 className="mb-8 font-mono text-xs uppercase tracking-[0.2em] text-text-muted">Trajetória</h3>
-            <Timeline items={journeyTimeline} />
+            <FadeIn delay={0.2}>
+              <dl className="mt-12 grid grid-cols-1 gap-x-8 gap-y-6 border-t border-border pt-8 sm:grid-cols-3">
+                <Fact term="Formação">Engenharia da Computação, UFC</Fact>
+                <Fact term="Hoje">Estágio em Desenvolvimento, RF Group</Fact>
+                <Fact term="Base">{site.location}</Fact>
+              </dl>
+            </FadeIn>
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function Fact({ term, children }: { term: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <dt className="label text-text-muted">{term}</dt>
+      <dd className="mt-2 text-sm leading-snug text-text">{children}</dd>
+    </div>
   )
 }

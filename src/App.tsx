@@ -1,8 +1,9 @@
 import { MotionConfig } from 'framer-motion'
 import { Route, Routes } from 'react-router-dom'
+import { Grain } from '@/components/atmosphere/Grain'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { ScrollToTop } from '@/components/layout/ScrollToTop'
+import { ScrollManager } from '@/components/layout/ScrollManager'
 import { HomePage } from '@/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { ProjectCasePage } from '@/pages/ProjectCasePage'
@@ -11,7 +12,7 @@ function App() {
   return (
     <MotionConfig reducedMotion="user">
       <div className="flex min-h-screen flex-col bg-bg">
-        <ScrollToTop />
+        <ScrollManager />
         <Navbar />
         <main className="flex-1">
           <Routes>
@@ -21,6 +22,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <Grain />
       </div>
     </MotionConfig>
   )

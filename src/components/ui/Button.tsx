@@ -14,11 +14,10 @@ interface SharedProps {
   children: ReactNode
 }
 
+/* Sem glow: o feedback é cor de fundo, borda e o deslocamento da seta. */
 const variantClasses: Record<Variant, string> = {
-  primary:
-    'bg-accent text-white hover:bg-accent-light shadow-[0_0_0_1px_rgba(127,90,245,0.4)] hover:shadow-[0_0_24px_-4px_rgba(127,90,245,0.55)]',
-  secondary:
-    'bg-transparent text-text border border-border-strong hover:border-accent-light hover:text-accent-light',
+  primary: 'bg-accent text-white hover:bg-accent-light',
+  secondary: 'bg-transparent text-text border border-border-strong hover:border-text/40 hover:bg-white/[0.03]',
   ghost: 'bg-transparent text-text-secondary hover:text-text',
 }
 
@@ -28,16 +27,14 @@ const sizeClasses: Record<Size, string> = {
 }
 
 const baseClasses =
-  'group inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-all duration-300 ease-out focus-visible:outline-accent-light disabled:cursor-not-allowed disabled:opacity-40'
+  'group inline-flex items-center justify-center gap-2 rounded-full font-medium tracking-tight transition-[background-color,border-color,color] focus-visible:outline-accent-light disabled:cursor-not-allowed disabled:opacity-40'
 
 function Content({ children, icon, iconPosition = 'right' }: Pick<SharedProps, 'children' | 'icon' | 'iconPosition'>) {
   return (
     <>
       {icon && iconPosition === 'left' && <span className="shrink-0">{icon}</span>}
       <span>{children}</span>
-      {icon && iconPosition === 'right' && (
-        <span className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">{icon}</span>
-      )}
+      {icon && iconPosition === 'right' && <span className="arrow-shift shrink-0">{icon}</span>}
     </>
   )
 }

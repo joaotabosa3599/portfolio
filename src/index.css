@@ -1,5 +1,34 @@
 @import 'tailwindcss';
 
+/* ----------------------------------------------------------------------------
+ * Tipografia — três famílias com três papéis:
+ *   Instrument Sans  display / editorial (headlines)
+ *   Geist            corpo e interface
+ *   Geist Mono       rótulos técnicos, metadados, código
+ * Arquivos variáveis, subset latin (cobre todos os acentos do português).
+ * -------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Instrument Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/instrument-sans-latin-wght.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/geist-latin-wght.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/geist-mono-latin-wght.woff2') format('woff2-variations');
+}
+
 @theme {
   --color-bg: #08090b;
   --color-bg-secondary: #111318;
@@ -20,32 +49,29 @@
   --color-accent-sky: #38bdf8;
   --color-accent-rose: #f43f5e;
 
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-display: 'Instrument Sans', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
 
   --container-content: 1180px;
 
-  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  --animate-fade-in: fade-in 0.6s ease forwards;
+  /* Sistema de motion — as mesmas curvas vivem em src/lib/motion.ts.
+     Rápido na intenção, suave na parada. Nada elástico. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
 
-  @keyframes fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
+  --default-transition-duration: 280ms;
+  --default-transition-timing-function: var(--ease-out-quart);
+}
+
+:root {
+  /* Escala de duração: micro (feedback) → componente → reveal → editorial → ambiente. */
+  --dur-micro: 150ms;
+  --dur-component: 280ms;
+  --dur-reveal: 600ms;
+  --dur-editorial: 1000ms;
+  --dur-ambient: 28s;
 }
 
 @layer base {
@@ -56,6 +82,21 @@
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
+  }
+
+  /* Com o Lenis ativo o scroll programático é dele; o nativo precisa ficar instantâneo. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  html.lenis {
+    scroll-behavior: auto;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: clip;
   }
 
   body {
@@ -112,6 +153,61 @@
     text-wrap: balance;
   }
 
+  /* Título editorial: a família display com tracking fechado e leading curto. */
+  .display {
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    font-weight: 600;
+  }
+
+  /* Rótulo técnico: mono, pequeno, espaçado. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Sublinhado que se desenha da esquerda. Aplicar em links de texto. */
+  .link-draw {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-draw::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.12em;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-component) var(--ease-out-quart);
+  }
+  .link-draw:hover::after,
+  .link-draw:focus-visible::after,
+  .group:hover .link-draw::after {
+    transform: scaleX(1);
+  }
+
+  /* Seta que se desloca 4px para a direita no hover do grupo. */
+  .arrow-shift {
+    transition: transform var(--dur-micro) var(--ease-out-quart);
+  }
+  .group:hover .arrow-shift,
+  .group:focus-visible .arrow-shift {
+    transform: translateX(4px);
+  }
+  .group:hover .arrow-shift-diag,
+  .group:focus-visible .arrow-shift-diag {
+    transform: translate(3px, -3px);
+  }
+  .arrow-shift-diag {
+    transition: transform var(--dur-micro) var(--ease-out-quart);
+  }
+
   /* Pista que percorre o indicador de scroll. */
   .hero-scroll-trail::after {
     content: '';
@@ -121,36 +217,12 @@
     height: 40%;
     border-radius: 999px;
     background: linear-gradient(to bottom, transparent, var(--color-accent-light));
-    animation: hero-scroll-trail 2.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    animation: hero-scroll-trail 2.4s var(--ease-in-out-quart) infinite;
   }
 
-  /* Brilho que cruza o CTA principal no hover. Fica acima do fundo do botão e
-     abaixo do rótulo, para iluminar sem lavar o texto. */
-  .cta-sheen {
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-sheen::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.3) 50%, transparent 62%);
-    transform: translateX(-120%);
-    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .cta-sheen:hover::after {
-    transform: translateX(120%);
-  }
-  .cta-sheen > * {
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Pulso do selo de disponibilidade: mais lento e mais discreto que o ping padrão. */
+  /* Pulso do selo de disponibilidade: lento e discreto. */
   .badge-pulse {
-    animation: badge-pulse 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    animation: badge-pulse 2.8s var(--ease-out-expo) infinite;
   }
   @keyframes badge-pulse {
     0% {
@@ -178,7 +250,101 @@
     }
   }
 
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  /* Grão — tira a perfeição digital do fundo. Camada fixa, sem blend mode
+     (blend em tela cheia custa uma recomposição por frame). ~3% de presença. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  /* Névoa ambiente — massas grandes, baixa opacidade, deriva de ~30s.
+     São gradientes, não blur: a camada é composta, nunca re-rasterizada. */
+  .fog {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform;
+  }
+  .fog-a {
+    animation: fog-drift-a var(--dur-ambient) var(--ease-in-out-quart) infinite alternate;
+  }
+  .fog-b {
+    animation: fog-drift-b calc(var(--dur-ambient) * 1.4) var(--ease-in-out-quart) infinite alternate;
+  }
+  @keyframes fog-drift-a {
+    from {
+      transform: translate3d(0, 0, 0) rotate(-18deg) scale(1);
+    }
+    to {
+      transform: translate3d(-3%, 4%, 0) rotate(-14deg) scale(1.06);
+    }
+  }
+  @keyframes fog-drift-b {
+    from {
+      transform: translate3d(0, 0, 0) rotate(24deg) scale(1);
+    }
+    to {
+      transform: translate3d(4%, -3%, 0) rotate(20deg) scale(1.08);
+    }
+  }
+
+  /* Pulso ambiente da luz de encerramento. */
+  .breathe {
+    animation: breathe calc(var(--dur-ambient) * 0.5) var(--ease-in-out-quart) infinite alternate;
+  }
+  @keyframes breathe {
+    from {
+      transform: translate3d(-50%, 0, 0) scale(1);
+      opacity: 0.8;
+    }
+    to {
+      transform: translate3d(-50%, -2%, 0) scale(1.08);
+      opacity: 1;
+    }
+  }
+
+  /* Ponto que percorre a arquitetura (interface → fronteira → dados → volta). */
+  .request-dot {
+    animation: request-travel 7s var(--ease-in-out-quart) infinite;
+  }
+  @keyframes request-travel {
+    0%,
+    8% {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 0;
+    }
+    14% {
+      opacity: 1;
+    }
+    44% {
+      transform: translate3d(-50%, var(--travel, 0px), 0);
+      opacity: 1;
+    }
+    56% {
+      transform: translate3d(-50%, var(--travel, 0px), 0);
+      opacity: 1;
+    }
+    86% {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 1;
+    }
+    92%,
+    100% {
+      transform: translate3d(-50%, 0, 0);
+      opacity: 0;
+    }
+  }
+
+  /* Cursor nativo escondido só sobre a mídia dos projetos, onde o rótulo
+     "ver caso" o substitui. Apenas com ponteiro fino. */
+  @media (pointer: fine) {
+    .cursor-label-zone {
+      cursor: none;
+    }
   }
 }

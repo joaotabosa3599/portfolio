@@ -18,10 +18,10 @@ function clamp(value: number) {
  *
  * Fica inerte em toque, em telas pequenas e com `prefers-reduced-motion`.
  */
-export function usePointerScene(ref: RefObject<HTMLElement | null>) {
+export function usePointerScene(ref: RefObject<HTMLElement | null>, enabled = true) {
   useEffect(() => {
     const el = ref.current
-    if (!el) return
+    if (!el || !enabled) return
 
     const finePointer = window.matchMedia('(pointer: fine)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -87,5 +87,5 @@ export function usePointerScene(ref: RefObject<HTMLElement | null>) {
       el.style.removeProperty('--px')
       el.style.removeProperty('--py')
     }
-  }, [ref])
+  }, [ref, enabled])
 }
