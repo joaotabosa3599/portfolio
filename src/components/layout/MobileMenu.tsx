@@ -3,6 +3,7 @@ import { X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
 import { site } from '@/data/site'
+import { DUR, EASE } from '@/lib/motion'
 
 interface MobileMenuProps {
   open: boolean
@@ -19,7 +20,7 @@ export function MobileMenu({ open, onClose, resolveHref, activeId }: MobileMenuP
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
+          transition={{ duration: DUR.component }}
           className="fixed inset-0 z-50 bg-bg/95 backdrop-blur-md md:hidden"
           role="dialog"
           aria-modal="true"
@@ -43,7 +44,7 @@ export function MobileMenu({ open, onClose, resolveHref, activeId }: MobileMenuP
                 key={item.href}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + index * 0.05, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.08 + index * 0.05, duration: DUR.reveal * 0.6, ease: EASE.outExpo }}
               >
                 <Link
                   to={resolveHref(item.href)}

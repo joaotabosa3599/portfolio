@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowUpRight, Briefcase, Lock, Users } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { ProjectFrame } from '@/components/projects/ProjectFrame'
 import { ProjectVisual } from '@/components/projects/ProjectVisual'
 import { GithubIcon } from '@/components/ui/BrandIcons'
 import { Button } from '@/components/ui/Button'
 import { projects } from '@/data/projects'
+import { DUR, EASE } from '@/lib/motion'
 
 const caseSections = [
   { key: 'overview', label: 'Overview' },
@@ -18,7 +20,9 @@ const caseSections = [
 export function ProjectCasePage() {
   const { slug } = useParams<{ slug: string }>()
   const project = projects.find((p) => p.slug === slug)
+  const renamed = project ? undefined : projects.find((p) => p.previousSlugs?.includes(slug ?? ''))
 
+  if (renamed) return <Navigate to={`/projetos/${renamed.slug}`} replace />
   if (!project) return <Navigate to="/" replace />
 
   const { caseStudy } = project
@@ -37,7 +41,7 @@ export function ProjectCasePage() {
         <motion.header
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: DUR.reveal, ease: EASE.outExpo }}
           className="mt-8 max-w-3xl"
         >
           <div className="flex flex-wrap items-center gap-2">
@@ -88,10 +92,10 @@ export function ProjectCasePage() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: DUR.reveal, delay: 0.1, ease: EASE.outExpo }}
           className="mt-14"
         >
-          <ProjectVisual project={project} />
+          {project.image ? <ProjectFrame project={project} priority className="relative" /> : <ProjectVisual project={project} />}
         </motion.div>
 
         {caseStudy ? (
@@ -126,7 +130,7 @@ export function ProjectCasePage() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.5, delay: index * 0.03, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: DUR.reveal, delay: index * 0.03, ease: EASE.outExpo }}
                 >
                   <h2 className="text-sm font-semibold uppercase tracking-wider text-accent-light">{label}</h2>
                   <p className="mt-3 max-w-2xl text-base leading-relaxed text-text-secondary sm:text-lg">

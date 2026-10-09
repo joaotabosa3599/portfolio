@@ -20,7 +20,7 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"
-            className="text-text-secondary transition-colors hover:text-accent-light"
+            className="text-text-secondary transition-colors hover:text-text"
           >
             <GithubIcon size={18} />
           </a>
@@ -29,20 +29,16 @@ export function Footer() {
             target="_blank"
             rel="noreferrer"
             aria-label="LinkedIn"
-            className="text-text-secondary transition-colors hover:text-accent-light"
+            className="text-text-secondary transition-colors hover:text-text"
           >
             <LinkedinIcon size={18} />
           </a>
-          <a
-            href={`mailto:${site.email}`}
-            aria-label="Email"
-            className="text-text-secondary transition-colors hover:text-accent-light"
-          >
+          <a href={`mailto:${site.email}`} aria-label="Email" className="text-text-secondary transition-colors hover:text-text">
             <Mail size={18} />
           </a>
         </div>
 
-        <p className="font-mono text-xs text-text-muted">Designed &amp; built with React.</p>
+        <p className="font-mono text-xs text-text-muted">Desenhado e construído por mim · React · TypeScript · GSAP</p>
       </div>
     </footer>
   )

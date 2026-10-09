@@ -1,6 +1,7 @@
 import { Clock } from 'lucide-react'
+import { Picture } from '@/components/ui/Picture'
 import type { Project } from '@/types/project'
-import { cn } from '@/lib/utils'
+import { cn, imageBase } from '@/lib/utils'
 
 const accentMap = {
   violet: {
@@ -66,11 +67,15 @@ export function ProjectVisual({ project }: ProjectVisualProps) {
 
         {project.image ? (
           <div className="relative flex-1 overflow-hidden">
-            <img
-              src={project.image}
+            <Picture
+              base={imageBase(project.image)}
               alt={`Captura de tela do projeto ${project.title}`}
-              loading="lazy"
-              className="h-full w-full object-cover object-top"
+              sizes="(min-width: 1180px) 1116px, 100vw"
+              width={1600}
+              height={1000}
+              priority
+              className="absolute inset-0 h-full w-full"
+              imgClassName="object-top"
             />
           </div>
         ) : (

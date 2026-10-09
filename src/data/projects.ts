@@ -2,9 +2,22 @@ import type { Project } from '@/types/project'
 
 export const projects: Project[] = [
   {
-    id: 'liquid-journal',
-    slug: 'liquid-journal',
-    title: 'Liquid Journal',
+    id: 'debrief',
+    showcase: true,
+    kindLabel: 'Projeto pessoal',
+    brief: {
+      problem: 'Traders controlam operações em planilhas manuais, sem visão de performance em tempo real.',
+      contribution:
+        'Ponta a ponta: modelagem no Postgres com RLS desde o schema, auth, cotações em tempo real (BRL/USD/EUR), dashboards e exportação em PDF.',
+      result: 'No ar e em desenvolvimento ativo — o maior projeto pessoal até agora.',
+    },
+    highlight: {
+      label: 'fluxo',
+      lines: ['importar operações → calcular métricas', 'BRL · USD · EUR em tempo real', 'relatório → PDF'],
+    },
+    slug: 'debrief',
+    previousSlugs: ['liquid-journal'],
+    title: 'Debrief',
     tagline: 'SaaS de diário financeiro que automatiza o registro de operações de trading e a análise de performance.',
     category: 'SaaS',
     featured: true,
@@ -16,10 +29,10 @@ export const projects: Project[] = [
     },
     accent: 'emerald',
     visual: 'saas',
-    image: '/projects/liquid-journal.jpg',
+    image: '/projects/debrief.jpg',
     caseStudy: {
       overview:
-        'Liquid Journal é um diário financeiro para traders: automatiza a importação de operações, acompanha métricas de performance em tempo real e substitui as planilhas manuais que a maioria dos traders ainda usa para controlar resultados.',
+        'Debrief (antes Liquid Journal) é um diário financeiro para traders: automatiza a importação de operações, acompanha métricas de performance em tempo real e substitui as planilhas manuais que a maioria dos traders ainda usa para controlar resultados.',
       problem:
         'Traders costumam controlar suas operações em planilhas manuais, propensas a erro e sem visão em tempo real de performance ou consistência. O objetivo era automatizar esse controle por completo, da modelagem do banco à última tela do produto.',
       process:
@@ -53,6 +66,19 @@ export const projects: Project[] = [
   },
   {
     id: 'connect-valley',
+    showcase: true,
+    kindLabel: 'RF Group',
+    brief: {
+      problem:
+        'Site, credenciamento, patrocínio, networking e operação interna numa única plataforma — com o mesmo login servindo quatro públicos.',
+      contribution:
+        'Full-Stack no time: App Router + Supabase (Postgres multi-schema, Auth e RLS decidindo no banco), apps iOS/Android via Capacitor, PWA e crons de sincronização.',
+      result: 'Cobre o evento de ponta a ponta, com centenas de testes automatizados; segue em desenvolvimento ativo.',
+    },
+    highlight: {
+      label: 'um login, quatro públicos',
+      lines: ['participante · patrocinador · operação · site', 'RLS decide, no banco, o que cada um vê'],
+    },
     slug: 'connect-valley',
     title: 'Connect Valley 2026',
     tagline: 'Plataforma completa para o evento Connect Valley 2026: site público, app do participante, portal do patrocinador e painel de operação.',
@@ -103,6 +129,18 @@ export const projects: Project[] = [
   },
   {
     id: 'mapa-disc',
+    showcase: true,
+    kindLabel: 'RF Group',
+    brief: {
+      problem: 'Três sistemas do grupo precisavam da mesma avaliação comportamental sem triplicar questionário e cálculo.',
+      contribution:
+        'Desenhei o serviço como bounded context: schema isolado, acesso só por RPC, API keys, webhook assinado (HMAC) à prova de replay. Decisão registrada em ADR.',
+      result: 'Em produção com dois consumidores (Atlas RH e Connect Valley), provado de ponta a ponta.',
+    },
+    highlight: {
+      label: 'contrato',
+      lines: ['emit → /teste/<token>', 'webhook · HMAC-SHA256 · ±300s · dedupe', 'resposta 200 · resultado disponível'],
+    },
     slug: 'mapa-disc',
     title: 'Mapa DISC',
     tagline:
@@ -151,6 +189,18 @@ export const projects: Project[] = [
   },
   {
     id: 'central-chamados',
+    showcase: true,
+    kindLabel: 'RF Group',
+    brief: {
+      problem: 'Abrir um chamado tinha que levar menos de um minuto, sem login, e ainda gerar prazo, rastreio e indicadores.',
+      contribution:
+        'React + Vite sem framework de UI; regras de negócio em funções puras com 47 testes; superfície pública inteira em funções security definer — anon não lê tabela nenhuma.',
+      result: 'Em produção no grupo, integrado ao Atlas Hub, com a fila do time em tempo real.',
+    },
+    highlight: {
+      label: 'chamado',
+      lines: ['protocolo · urgência alta', 'dois prazos congelados na abertura', 'anon → 0 tabelas legíveis'],
+    },
     slug: 'central-chamados',
     title: 'Central de Chamados RFG',
     tagline:
@@ -200,6 +250,20 @@ export const projects: Project[] = [
   },
   {
     id: 'goup-training',
+    showcase: true,
+    kindLabel: 'Front-end em equipe · Loading Jr',
+    brief: {
+      problem:
+        'Unir numa única plataforma frentes bem diferentes — cursos e pós-graduação, área do dentista, painel administrativo, planejamento e aluguel — sem perder consistência visual e de navegação.',
+      contribution:
+        'Front-end em equipe com o time da Loading Jr: área do dentista (autenticação, pacientes, pedidos), painel administrativo e páginas institucionais, em Next.js App Router, integrando com a API feita por outra parte do time.',
+      result:
+        'Em produção: site, área do dentista e painel administrativo no ar para a primeira pós-graduação em Odontologia de Sobral e região.',
+    },
+    highlight: {
+      label: 'frentes',
+      lines: ['site · área do dentista · painel admin', 'E2E: Postgres descartável → migrações → login e CRUDs'],
+    },
     slug: 'goup-training',
     title: 'GoUp Training',
     tagline: 'Ecossistema multi-vertical de educação continuada, mentoria e gestão clínica em odontologia.',
@@ -238,6 +302,7 @@ export const projects: Project[] = [
   },
   {
     id: 'ana-bijus',
+    kindLabel: 'Avaliação técnica',
     slug: 'ana-bijus',
     title: 'Ana Bijus',
     tagline: 'E-commerce de joias e semijoias com autenticação, carrinho e histórico de pedidos.',
@@ -276,6 +341,7 @@ export const projects: Project[] = [
   },
   {
     id: 'cinesol-cinema',
+    kindLabel: 'Em dupla · Loading Jr',
     slug: 'cinesol-cinema',
     title: 'CineSol Cinema',
     tagline: 'Sistema de bilheteria digital com escolha de poltronas, combos e checkout com múltiplos pagamentos.',
@@ -315,6 +381,7 @@ export const projects: Project[] = [
   },
   {
     id: 'jogo-da-velha',
+    kindLabel: 'JavaScript puro',
     slug: 'jogo-da-velha',
     title: 'Jogo da Velha',
     tagline: 'Jogo da velha SPA com lógica de vitória, histórico de jogadas e placar persistente na sessão.',

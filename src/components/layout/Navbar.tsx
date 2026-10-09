@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { Menu } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
@@ -6,10 +7,15 @@ import { GithubIcon, LinkedinIcon } from '@/components/ui/BrandIcons'
 import { site } from '@/data/site'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { useScrolled } from '@/hooks/useScrolled'
+import { DUR, EASE } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 
 const sectionIds = site.nav.map((item) => item.href.replace('#', ''))
 
+/**
+ * No topo, integrada ao hero (transparente). Depois, vidro moderado.
+ * O indicador da seção atual desliza entre os itens (layout animation).
+ */
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const scrolled = useScrolled()
@@ -23,16 +29,15 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-40 transition-all duration-300',
-          scrolled
-            ? 'border-b border-border bg-bg/80 backdrop-blur-lg'
-            : 'border-b border-transparent bg-transparent',
+          'fixed inset-x-0 top-0 z-40 border-b transition-[background-color,border-color,backdrop-filter] duration-500',
+          scrolled ? 'border-border bg-bg/75 backdrop-blur-md' : 'border-transparent bg-transparent',
         )}
       >
         <div className="mx-auto flex h-16 max-w-content items-center justify-between px-6 sm:px-8">
           <Link
             to={resolveHref('#home')}
             className="font-mono text-lg font-semibold tracking-tight text-text transition-colors hover:text-accent-light"
+            aria-label="Início"
           >
             JT<span className="text-accent">.</span>
           </Link>
@@ -45,14 +50,19 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   to={resolveHref(item.href)}
+                  aria-current={active ? 'location' : undefined}
                   className={cn(
-                    'relative px-4 py-2 text-sm font-medium transition-colors',
+                    'relative px-3.5 py-2 text-sm font-medium transition-colors',
                     active ? 'text-text' : 'text-text-secondary hover:text-text',
                   )}
                 >
                   {item.label}
                   {active && (
-                    <span className="absolute inset-x-4 -bottom-[1px] h-px bg-gradient-to-r from-transparent via-accent-light to-transparent" />
+                    <motion.span
+                      layoutId="nav-active"
+                      transition={{ duration: DUR.component, ease: EASE.outQuart }}
+                      className="absolute inset-x-3.5 -bottom-[1px] h-px bg-accent-light"
+                    />
                   )}
                 </Link>
               )
@@ -65,7 +75,7 @@ export function Navbar() {
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
-              className="text-text-secondary transition-colors hover:text-accent-light"
+              className="text-text-secondary transition-colors hover:text-text"
             >
               <GithubIcon size={19} />
             </a>
@@ -74,7 +84,7 @@ export function Navbar() {
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
-              className="text-text-secondary transition-colors hover:text-accent-light"
+              className="text-text-secondary transition-colors hover:text-text"
             >
               <LinkedinIcon size={19} />
             </a>
@@ -84,7 +94,8 @@ export function Navbar() {
             type="button"
             onClick={() => setMobileOpen(true)}
             aria-label="Abrir menu"
-            className="rounded-full border border-border p-2 text-text-secondary transition-colors hover:border-accent-light hover:text-text md:hidden"
+            aria-expanded={mobileOpen}
+            className="rounded-full border border-border p-2 text-text-secondary transition-colors hover:border-border-strong hover:text-text md:hidden"
           >
             <Menu size={18} />
           </button>
