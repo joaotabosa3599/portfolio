@@ -58,7 +58,7 @@ export const experience: ExperienceEntry[] = [
     summary:
       'SaaS de diário financeiro para traders, do banco com RLS à interface. É o laboratório onde testo arquitetura e produto antes de levar para o trabalho.',
     work: [{ label: 'Debrief', slug: 'debrief' }],
-    stack: ['Next.js', 'Supabase', 'PostgreSQL', 'React Three Fiber', 'Recharts'],
+    stack: ['Next.js', 'Supabase', 'PostgreSQL', 'React Three Fiber', 'ECharts'],
     status: 'current',
   },
   {

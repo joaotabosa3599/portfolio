@@ -13,12 +13,12 @@ export const projects: Project[] = [
     },
     highlight: {
       label: 'fluxo',
-      lines: ['importar operações → calcular métricas', 'BRL · USD · EUR em tempo real', 'relatório → PDF'],
+      lines: ['registrar o trade → métricas na hora', 'BRL · USD · EUR em tempo real', 'relatório → PDF'],
     },
     slug: 'debrief',
     previousSlugs: ['liquid-journal'],
     title: 'Debrief',
-    tagline: 'SaaS de diário financeiro que automatiza o registro de operações de trading e a análise de performance.',
+    tagline: 'SaaS de diário de trading: registro rápido das operações, métricas de performance calculadas na hora e feedback de IA sobre o histórico.',
     category: 'SaaS',
     featured: true,
     isPlaceholder: false,
@@ -32,13 +32,13 @@ export const projects: Project[] = [
     image: '/projects/debrief.jpg',
     caseStudy: {
       overview:
-        'Debrief (antes Liquid Journal) é um diário financeiro para traders: automatiza a importação de operações, acompanha métricas de performance em tempo real e substitui as planilhas manuais que a maioria dos traders ainda usa para controlar resultados.',
+        'Debrief (antes Liquid Journal) é um diário financeiro para traders: o registro de cada operação leva segundos, com a calculadora fechando o resultado, e as métricas de performance saem na hora, no lugar das planilhas manuais que a maioria dos traders ainda usa para controlar resultados.',
       problem:
-        'Traders costumam controlar suas operações em planilhas manuais, propensas a erro e sem visão em tempo real de performance ou consistência. O objetivo era automatizar esse controle por completo, da modelagem do banco à última tela do produto.',
+        'Traders costumam controlar suas operações em planilhas manuais, propensas a erro e sem visão em tempo real de performance ou consistência. O objetivo era tirar o trabalho braçal desse controle, da modelagem do banco à última tela do produto.',
       process:
         'O desenvolvimento começou pela modelagem do banco relacional no Supabase/PostgreSQL, pensada para suportar alto volume de operações com Row Level Security desde a base. A partir daí entraram a autenticação, o consumo de APIs de cotação em tempo real para suporte multi-moeda (BRL/USD/EUR) e as camadas de visualização de métricas.',
       solution:
-        'A aplicação, em Next.js e TypeScript, cobre importação e registro de operações, dashboards de performance com Recharts, exportação de relatórios em PDF, componentes construídos com Radix UI e shadcn, uma camada visual com React Three Fiber e suporte a múltiplos idiomas.',
+        'A aplicação, em Next.js e TypeScript, cobre o registro de operações com calculadora e câmbio, dashboards de performance com ECharts e calendário de PNL, feedback de IA sobre o histórico com a API do Claude, monitoramento dos trades em andamento com aviso por push, exportação em PDF e CSV, componentes construídos com Radix UI e shadcn, uma cena 3D com React Three Fiber e GSAP na página inicial e suporte a português e inglês.',
       technologies: [
         'Next.js',
         'TypeScript',
@@ -48,7 +48,10 @@ export const projects: Project[] = [
         'Radix UI',
         'Framer Motion',
         'React Three Fiber',
-        'Recharts',
+        'GSAP',
+        'ECharts',
+        'Claude API',
+        'Web Push',
         'jsPDF',
         'Vitest',
       ],
@@ -57,10 +60,70 @@ export const projects: Project[] = [
       result:
         'Já está no ar e é meu maior projeto pessoal até agora: autenticação, modelagem de dados robusta e uma interface pensada do banco à tela final, com o desenvolvimento seguindo ativo.',
       gallerySteps: [
-        'Importação de operações',
+        'Registro de operações',
         'Dashboard de performance',
         'Suporte multi-moeda em tempo real',
         'Exportação de relatórios em PDF',
+      ],
+    },
+  },
+  {
+    id: 'constela-orion',
+    showcase: true,
+    kindLabel: 'Projeto pessoal',
+    brief: {
+      problem:
+        'Estudar para concurso se espalha entre planilhas, PDFs de edital e apps de flashcard soltos, sem motivo para voltar no dia seguinte.',
+      contribution:
+        'Ponta a ponta: produto, pixel art, motor de partículas em Canvas, flashcards com FSRS e sincronização local-first com o Supabase.',
+      result: 'Em desenvolvimento, com 293 testes automatizados e domínio próprio chegando em breve.',
+    },
+    highlight: {
+      label: 'local-first',
+      lines: ['estuda offline → grava no aparelho', 'entra na conta → sincroniza em segundo plano', 'FSRS-6 agenda a próxima revisão'],
+    },
+    slug: 'constela-orion',
+    title: 'Constela & Órion',
+    tagline: 'Plataforma de estudos gamificada em pixel art, com dois universos trocáveis e tudo funcionando sem internet.',
+    category: 'Web App',
+    featured: true,
+    isPlaceholder: false,
+    inProgress: true,
+    tech: ['Next.js', 'TypeScript', 'Supabase', 'Zustand', 'Tailwind CSS', 'Canvas 2D'],
+    links: {},
+    accent: 'rose',
+    image: '/projects/constela-orion.jpg',
+    caseStudy: {
+      overview:
+        'Constela & Órion é uma plataforma de estudos gamificada em pixel art para concursos públicos: agenda semanal, edital com o progresso de cada assunto, quizzes com explicação, simulados no tempo da prova e flashcards com repetição espaçada. São dois universos trocáveis, Constela (rosa, com a abelhinha) e Órion (escuro, com o axolote Ori), cada um com mascote, paleta e céu animado próprios.',
+      problem:
+        'Quem estuda para concurso costuma dividir o plano entre planilhas, PDFs de edital e apps de flashcard soltos, sem visão do que já foi visto e sem motivo para voltar no dia seguinte. O objetivo era juntar tudo num lugar só e transformar a constância em jogo, sem punir o dia perdido.',
+      process:
+        'Comecei pelo modelo de dados local: cada tela lê e grava no aparelho, com Zustand e IndexedDB, para o app funcionar sem internet desde o primeiro acesso. Em cima disso veio um motor de sincronização próprio com o Supabase (Postgres com RLS), que roda em segundo plano quando há conta e nunca mistura dados de contas diferentes. A identidade visual nasceu junto: sprites em pixel art definidos em código, temas trocados por CSS e um motor de partículas em Canvas 2D para o céu de cada universo.',
+      solution:
+        'O app cobre agenda com arrastar e soltar, edital com progresso por assunto, banco de questões com quizzes e simulados cronometrados, flashcards agendados pelo FSRS-6, XP, conquistas e um feedback de desempenho gerado pelo Gemini. A abertura é uma intro de jogo com efeitos sonoros sintetizados em Web Audio, e trilhas chiptune de licença livre tocam em loop, com opção de desligar nas configurações.',
+      technologies: [
+        'Next.js 16 (App Router, Cache Components)',
+        'React 19',
+        'TypeScript',
+        'Tailwind CSS 4',
+        'Zustand + IndexedDB',
+        'Supabase (Auth + PostgreSQL, RLS)',
+        'FSRS-6',
+        'Canvas 2D',
+        'Web Audio API',
+        'Gemini',
+        'Vitest',
+      ],
+      challenges:
+        'Sincronizar dados que nascem offline sem perder nada nem misturar contas, e manter o app leve apesar das animações: troquei as bibliotecas de animação e de gráfico por CSS e SVG próprios e passei a carregar o Supabase, os formulários e as telas secundárias sob demanda, o que cortou de 35% a 61% do JavaScript de cada tela.',
+      result:
+        'Os dois universos estão completos, com 293 testes automatizados e JavaScript inicial entre 210 e 275 KB por tela. Os próximos passos são o domínio próprio e, depois, levar o app também para o ENEM.',
+      gallerySteps: [
+        'Intro de jogo e escolha do universo',
+        'Agenda e edital com o progresso de cada assunto',
+        'Quizzes, simulados e flashcards com FSRS',
+        'Sincronização local-first com a conta',
       ],
     },
   },
