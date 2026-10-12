@@ -13,12 +13,12 @@ export const projects: Project[] = [
     },
     highlight: {
       label: 'fluxo',
-      lines: ['importar operações → calcular métricas', 'BRL · USD · EUR em tempo real', 'relatório → PDF'],
+      lines: ['registrar o trade → métricas na hora', 'BRL · USD · EUR em tempo real', 'relatório → PDF'],
     },
     slug: 'debrief',
     previousSlugs: ['liquid-journal'],
     title: 'Debrief',
-    tagline: 'SaaS de diário financeiro que automatiza o registro de operações de trading e a análise de performance.',
+    tagline: 'SaaS de diário de trading: registro rápido das operações, métricas de performance calculadas na hora e feedback de IA sobre o histórico.',
     category: 'SaaS',
     featured: true,
     isPlaceholder: false,
@@ -32,13 +32,13 @@ export const projects: Project[] = [
     image: '/projects/debrief.jpg',
     caseStudy: {
       overview:
-        'Debrief (antes Liquid Journal) é um diário financeiro para traders: automatiza a importação de operações, acompanha métricas de performance em tempo real e substitui as planilhas manuais que a maioria dos traders ainda usa para controlar resultados.',
+        'Debrief (antes Liquid Journal) é um diário financeiro para traders: o registro de cada operação leva segundos, com a calculadora fechando o resultado, e as métricas de performance saem na hora, no lugar das planilhas manuais que a maioria dos traders ainda usa para controlar resultados.',
       problem:
-        'Traders costumam controlar suas operações em planilhas manuais, propensas a erro e sem visão em tempo real de performance ou consistência. O objetivo era automatizar esse controle por completo, da modelagem do banco à última tela do produto.',
+        'Traders costumam controlar suas operações em planilhas manuais, propensas a erro e sem visão em tempo real de performance ou consistência. O objetivo era tirar o trabalho braçal desse controle, da modelagem do banco à última tela do produto.',
       process:
         'O desenvolvimento começou pela modelagem do banco relacional no Supabase/PostgreSQL, pensada para suportar alto volume de operações com Row Level Security desde a base. A partir daí entraram a autenticação, o consumo de APIs de cotação em tempo real para suporte multi-moeda (BRL/USD/EUR) e as camadas de visualização de métricas.',
       solution:
-        'A aplicação, em Next.js e TypeScript, cobre importação e registro de operações, dashboards de performance com Recharts, exportação de relatórios em PDF, componentes construídos com Radix UI e shadcn, uma camada visual com React Three Fiber e suporte a múltiplos idiomas.',
+        'A aplicação, em Next.js e TypeScript, cobre o registro de operações com calculadora e câmbio, dashboards de performance com ECharts e calendário de PNL, feedback de IA sobre o histórico com a API do Claude, monitoramento dos trades em andamento com aviso por push, exportação em PDF e CSV, componentes construídos com Radix UI e shadcn, uma cena 3D com React Three Fiber e GSAP na página inicial e suporte a português e inglês.',
       technologies: [
         'Next.js',
         'TypeScript',
@@ -48,7 +48,10 @@ export const projects: Project[] = [
         'Radix UI',
         'Framer Motion',
         'React Three Fiber',
-        'Recharts',
+        'GSAP',
+        'ECharts',
+        'Claude API',
+        'Web Push',
         'jsPDF',
         'Vitest',
       ],
@@ -57,7 +60,7 @@ export const projects: Project[] = [
       result:
         'Já está no ar e é meu maior projeto pessoal até agora: autenticação, modelagem de dados robusta e uma interface pensada do banco à tela final, com o desenvolvimento seguindo ativo.',
       gallerySteps: [
-        'Importação de operações',
+        'Registro de operações',
         'Dashboard de performance',
         'Suporte multi-moeda em tempo real',
         'Exportação de relatórios em PDF',
