@@ -7,7 +7,7 @@ export const site = {
   location: 'Brasil',
   social: {
     github: 'https://github.com/joaotabosa3599',
-    linkedin: 'https://www.linkedin.com/in/jo%C3%A3otabosa3599/',
+    linkedin: 'https://www.linkedin.com/in/joaotabosa/',
   },
   nav: [
     { label: 'Home', href: '#home' },
