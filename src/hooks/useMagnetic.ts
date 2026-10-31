@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 
-const RADIUS = 110
-const PULL = 0.32
-const INERTIA = 0.14
+const RADIUS = 80
+const PULL = 0.18
+const INERTIA = 0.16
 const SETTLE = 0.05
 
 function lerp(from: number, to: number, amount: number) {
@@ -21,7 +21,7 @@ export function useMagnetic<T extends HTMLElement>() {
     const el = ref.current
     if (!el) return
 
-    const finePointer = window.matchMedia('(pointer: fine)')
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (!finePointer.matches || reducedMotion.matches) return
 

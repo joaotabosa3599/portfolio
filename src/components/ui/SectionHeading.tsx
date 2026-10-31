@@ -1,34 +1,52 @@
 import type { ReactNode } from 'react'
-import { FadeIn, RevealLines } from '@/components/ui/Reveal'
+import { FadeIn, RevealLines, Rule } from '@/components/ui/Reveal'
 import { cn } from '@/lib/utils'
 
-interface SectionHeadingProps {
-  eyebrow: string
-  /** Título em linhas: cada entrada sobe de uma máscara própria. */
-  title: ReactNode[]
-  description?: ReactNode
-  align?: 'left' | 'center'
+interface SectionMarkerProps {
+  index: string
+  label: string
+  /** Texto técnico alinhado à direita da régua (ex.: contagem). */
+  aside?: ReactNode
   className?: string
-  /** Índice da seção, em mono, ao lado do eyebrow. */
-  index?: string
 }
 
-export function SectionHeading({ eyebrow, title, description, align = 'left', className, index }: SectionHeadingProps) {
+/**
+ * Marcador editorial de seção: índice, nome e uma régua que se desenha até
+ * a borda do grid. É a única peça repetida entre seções — o resto da
+ * composição muda de seção para seção.
+ */
+export function SectionMarker({ index, label, aside, className }: SectionMarkerProps) {
   return (
-    <div className={cn('max-w-2xl', align === 'center' && 'mx-auto text-center', className)}>
-      <FadeIn className="flex items-center gap-3">
-        {index && <span className="label text-text-muted">{index}</span>}
-        <span className="label text-accent-light">{eyebrow}</span>
+    <div className={cn('flex items-center gap-4', className)}>
+      <FadeIn as="p" y={6} className="label flex shrink-0 items-center gap-3 text-text-secondary">
+        <span aria-hidden="true" className="text-brand-light">
+          {index}
+        </span>
+        <span>{label}</span>
       </FadeIn>
-      <RevealLines
-        lines={title}
-        className="display mt-4 text-balance text-[2.5rem] text-text sm:text-5xl lg:text-[3.5rem]"
-      />
-      {description && (
-        <FadeIn delay={0.15}>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-text-secondary sm:text-lg">{description}</p>
+      <Rule className="flex-1" delay={0.1} />
+      {aside && (
+        <FadeIn as="p" y={6} delay={0.2} className="label shrink-0 text-text-secondary">
+          {aside}
         </FadeIn>
       )}
     </div>
+  )
+}
+
+interface SectionTitleProps {
+  lines: ReactNode[]
+  className?: string
+  /** Recuo editorial nas linhas a partir da segunda (só desktop). */
+  indent?: boolean
+}
+
+export function SectionTitle({ lines, className, indent = false }: SectionTitleProps) {
+  return (
+    <RevealLines
+      lines={lines}
+      className={cn('display text-section text-text', className)}
+      lineClassName={indent ? (i) => (i > 0 ? 'lg:pl-[8.333%]' : undefined) : undefined}
+    />
   )
 }

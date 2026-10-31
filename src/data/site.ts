@@ -10,11 +10,10 @@ export const site = {
     linkedin: 'https://www.linkedin.com/in/joaotabosa/',
   },
   nav: [
-    { label: 'Home', href: '#home' },
-    { label: 'Projetos', href: '#projetos' },
-    { label: 'Sobre', href: '#sobre' },
-    { label: 'Stack', href: '#skills' },
-    { label: 'Experiência', href: '#experiencia' },
-    { label: 'Contato', href: '#contato' },
+    { label: 'Projetos', href: '#projetos', index: '01' },
+    { label: 'Sobre', href: '#sobre', index: '02' },
+    { label: 'Stack', href: '#stack', index: '03' },
+    { label: 'Experiência', href: '#experiencia', index: '04' },
+    { label: 'Contato', href: '#contato', index: '05' },
   ],
 } as const

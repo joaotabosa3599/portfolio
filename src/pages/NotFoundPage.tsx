@@ -3,15 +3,19 @@ import { Button } from '@/components/ui/Button'
 
 export function NotFoundPage() {
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-      <span className="font-mono text-sm text-accent-light">404</span>
-      <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Página não encontrada</h1>
-      <p className="mt-4 max-w-md text-text-secondary">
-        A página que você está procurando não existe ou foi movida.
-      </p>
-      <Button to="/" className="mt-8" icon={<ArrowLeft size={16} />} iconPosition="left">
-        Voltar para o início
-      </Button>
+    <section className="shell flex min-h-[80svh] flex-col justify-center pb-20 pt-32">
+      <p className="font-mono text-xs text-brand-light">404</p>
+      <h1 className="display mt-5 text-section text-text">
+        Esta página
+        <br />
+        não existe.
+      </h1>
+      <p className="mt-6 max-w-md text-base text-text-secondary">O endereço pode ter mudado ou nunca ter existido.</p>
+      <div className="mt-10">
+        <Button to="/" variant="secondary" leadingIcon={<ArrowLeft size={16} />}>
+          Voltar para o início
+        </Button>
+      </div>
     </section>
   )
 }

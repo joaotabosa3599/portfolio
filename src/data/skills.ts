@@ -1,10 +1,14 @@
-export interface StackLayer {
-  id: string
+export interface Capability {
+  id: 'data' | 'application' | 'interface'
   index: string
+  /** Nome técnico da camada, em mono. */
+  layer: string
   title: string
   /** Como essa camada é tratada nos projetos — a regra, não a ferramenta. */
   principle: string
   tech: string[]
+  /** Projetos do portfólio em que a capacidade aparece de fato (slugs). */
+  evidence: string[]
 }
 
 export interface StackSupport {
@@ -13,31 +17,40 @@ export interface StackSupport {
 }
 
 /**
- * A arquitetura que se repete em cada projeto, de cima para baixo.
- * Só tecnologias realmente usadas nos projetos do portfólio.
+ * Capacidades, na mesma ordem das camadas da escultura do hero (01 → 03).
+ * Só tecnologias usadas nos projetos do portfólio; a prova de cada grupo são
+ * os projetos listados em `evidence`, não uma porcentagem.
  */
-export const stackLayers: StackLayer[] = [
+export const capabilities: Capability[] = [
+  {
+    id: 'data',
+    index: '01',
+    layer: 'Data & Infrastructure',
+    title: 'Dados e infraestrutura',
+    principle:
+      'Schema modelado antes da tela. Permissões decididas no banco e testadas num Postgres descartável antes de qualquer deploy.',
+    tech: ['PostgreSQL', 'Supabase', 'Row Level Security', 'Schemas isolados', 'Migrações', 'Vercel'],
+    evidence: ['mapa-disc', 'central-chamados', 'connect-valley', 'debrief'],
+  },
+  {
+    id: 'application',
+    index: '02',
+    layer: 'Application Development',
+    title: 'Lógica e integração',
+    principle:
+      'Autorização na fronteira, não na tela: RPCs security definer, API keys com digest, webhooks assinados e sincronização entre sistemas.',
+    tech: ['TypeScript', 'Node.js', 'APIs REST', 'Supabase Auth', 'RPCs security definer', 'HMAC-SHA256', 'Zustand'],
+    evidence: ['mapa-disc', 'connect-valley', 'central-chamados', 'constela-orion'],
+  },
   {
     id: 'interface',
     index: '03',
-    title: 'Interface',
-    principle: 'Componentes tipados, estado previsível e motion com propósito. Acessível por teclado, responsiva por padrão.',
-    tech: ['React', 'Next.js (App Router)', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'HTML · CSS · JavaScript'],
-  },
-  {
-    id: 'fronteira',
-    index: '02',
-    title: 'Fronteira',
+    layer: 'Interface Engineering',
+    title: 'Interface e experiência',
     principle:
-      'Autorização decidida no banco, não na tela: RLS, RPCs security definer, API keys com digest e webhooks assinados.',
-    tech: ['Supabase Auth', 'Row Level Security', 'RPCs security definer', 'APIs REST', 'HMAC-SHA256', 'Node.js'],
-  },
-  {
-    id: 'dados',
-    index: '01',
-    title: 'Dados',
-    principle: 'Schema modelado antes da tela. Permissões testadas num Postgres descartável antes de qualquer deploy.',
-    tech: ['PostgreSQL', 'Supabase', 'Migrações', 'Schemas isolados', 'Estruturas de dados'],
+      'Componentes tipados, estado previsível e motion com propósito. Acessível por teclado e responsiva por padrão.',
+    tech: ['React', 'Next.js (App Router)', 'Tailwind CSS', 'Framer Motion', 'GSAP', 'Three.js', 'Canvas 2D'],
+    evidence: ['debrief', 'constela-orion', 'site-loading', 'cinesol-cinema'],
   },
 ]
 

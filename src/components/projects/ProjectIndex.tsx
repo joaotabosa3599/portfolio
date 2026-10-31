@@ -72,12 +72,12 @@ export function ProjectIndex({ projects, offset }: ProjectIndexProps) {
               onFocus={() => setHovered(index)}
               onBlur={() => setHovered(null)}
               className={cn(
-                'group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-5 border-t border-border py-5 transition-colors duration-300 sm:grid-cols-[2.5rem_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.9fr)_1.5rem] sm:gap-x-6',
+                'group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-5 border-t border-border py-5 transition-opacity duration-300 sm:py-6 sm:grid-cols-[2.5rem_minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,0.9fr)_1.5rem] sm:gap-x-6',
                 hovered !== null && hovered !== index && 'opacity-50',
               )}
             >
               {/* Miniatura: só no toque/telas pequenas. No desktop a prévia flutua. */}
-              <span className="label hidden text-text-muted sm:block">{String(offset + index + 1).padStart(2, '0')}</span>
+              <span className="hidden font-mono text-xs text-text-secondary sm:block">{String(offset + index + 1).padStart(2, '0')}</span>
               <span className="relative block h-12 w-[4.5rem] shrink-0 overflow-hidden rounded-md border border-border sm:hidden">
                 {project.image && (
                   <Picture
@@ -94,10 +94,10 @@ export function ProjectIndex({ projects, offset }: ProjectIndexProps) {
               </span>
 
               <span className="min-w-0">
-                <span className="block truncate text-lg font-medium tracking-tight text-text transition-colors group-hover:text-accent-light sm:text-xl">
+                <span className="block truncate title text-xl text-text transition-colors group-hover:text-brand-light sm:text-2xl">
                   {project.title}
                 </span>
-                <span className="mt-0.5 block truncate text-xs text-text-muted sm:hidden">
+                <span className="mt-0.5 block truncate text-xs text-text-secondary sm:hidden">
                   {[project.category, project.kindLabel].filter(Boolean).join(' · ')}
                 </span>
               </span>
@@ -105,11 +105,11 @@ export function ProjectIndex({ projects, offset }: ProjectIndexProps) {
               <span className="hidden truncate text-sm text-text-secondary sm:block">
                 {[project.category, project.kindLabel].filter(Boolean).join(' · ')}
               </span>
-              <span className="hidden truncate font-mono text-xs text-text-muted sm:block">
+              <span className="hidden truncate font-mono text-xs text-text-secondary sm:block">
                 {project.tech.slice(0, 3).join(' · ')}
               </span>
 
-              <ArrowUpRight size={18} className="arrow-shift-diag justify-self-end text-text-muted group-hover:text-text" />
+              <ArrowUpRight size={18} aria-hidden="true" className="arrow-diag justify-self-end text-text-secondary group-hover:text-text" />
             </Link>
           </FadeIn>
         ))}
@@ -120,7 +120,7 @@ export function ProjectIndex({ projects, offset }: ProjectIndexProps) {
         ref={previewRef}
         data-visible={previewProject ? 'true' : 'false'}
         aria-hidden="true"
-        className="pointer-events-none absolute right-[18%] top-0 z-10 hidden overflow-hidden rounded-lg border border-border-strong bg-bg-secondary opacity-0 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)] transition-opacity duration-300 data-[visible=true]:opacity-100 lg:block"
+        className="pointer-events-none absolute right-[18%] top-0 z-10 hidden overflow-hidden rounded-lg border border-border-strong bg-surface opacity-0 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)] transition-opacity duration-300 data-[visible=true]:opacity-100 lg:block"
         style={{ width: PREVIEW_W, aspectRatio: '16 / 10' }}
       >
         {projects.map((project, index) =>

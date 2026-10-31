@@ -1,31 +1,43 @@
-import { Intro } from '@/components/intro/Intro'
-import { useIntroStatus } from '@/lib/intro'
+import { startTransition, useEffect, useState } from 'react'
 import { About } from '@/sections/About'
+import { Capabilities } from '@/sections/Capabilities'
 import { Contact } from '@/sections/Contact'
-import { Editorial } from '@/sections/Editorial'
 import { Experience } from '@/sections/Experience'
 import { Hero } from '@/sections/Hero'
 import { Projects } from '@/sections/Projects'
-import { Skills } from '@/sections/Skills'
 
 /**
- * Ritmo da página: HERO (alta) → PROJETOS (alta) → EDITORIAL (pausa) →
- * SOBRE (baixa) → STACK (média) → EXPERIÊNCIA (média) → CONTATO (alta).
+ * Ritmo da página — a composição muda de seção para seção:
+ *   HERO        texto + escultura (alta intensidade)
+ *   PROJETOS    galeria editorial: destaque, alternados, par (alta)
+ *   SOBRE       ficha + texto + citação, fundo secundário (pausa)
+ *   STACK       grade técnica de três camadas (média)
+ *   EXPERIÊNCIA timeline com título preso, fundo secundário (média)
+ *   CONTATO     tipografia grande + a escultura montada (encerramento)
+ *
+ * O hero renderiza no primeiro quadro; o resto da página entra numa
+ * transição, que o React fatia em pedaços pequenos. Assim a primeira dobra
+ * não espera pelo render de ~1.300 nós que ainda estão fora da tela.
  */
 export function HomePage() {
-  const introStatus = useIntroStatus()
-  const introVisible = introStatus === 'playing' || introStatus === 'landing'
+  const [rest, setRest] = useState(false)
+
+  useEffect(() => {
+    startTransition(() => setRest(true))
+  }, [])
 
   return (
     <>
-      {introVisible && <Intro />}
       <Hero />
-      <Projects />
-      <Editorial />
-      <About />
-      <Skills />
-      <Experience />
-      <Contact />
+      {rest && (
+        <>
+          <Projects />
+          <About />
+          <Capabilities />
+          <Experience />
+          <Contact />
+        </>
+      )}
     </>
   )
 }

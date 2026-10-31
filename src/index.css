@@ -1,18 +1,19 @@
 @import 'tailwindcss';
 
 /* ----------------------------------------------------------------------------
- * Tipografia — três famílias com três papéis:
- *   Instrument Sans  display / editorial (headlines)
- *   Geist            corpo e interface
- *   Geist Mono       rótulos técnicos, metadados, código
- * Arquivos variáveis, subset latin (cobre todos os acentos do português).
+ * Tipografia — três famílias, três papéis:
+ *   Space Grotesk   display / headlines (geométrica, com personalidade)
+ *   Geist           corpo, navegação, botões
+ *   IBM Plex Mono   índices, rótulos técnicos, stack, metadados
+ * Auto-hospedadas, subset latin (cobre todos os acentos do português).
+ * Display e corpo têm preload no index.html; a mono entra sem preload.
  * -------------------------------------------------------------------------- */
 @font-face {
-  font-family: 'Instrument Sans';
+  font-family: 'Space Grotesk';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 300 700;
   font-display: swap;
-  src: url('/fonts/instrument-sans-latin-wght.woff2') format('woff2-variations');
+  src: url('/fonts/space-grotesk-latin-wght.woff2') format('woff2-variations');
 }
 @font-face {
   font-family: 'Geist';
@@ -22,99 +23,202 @@
   src: url('/fonts/geist-latin-wght.woff2') format('woff2-variations');
 }
 @font-face {
-  font-family: 'Geist Mono';
+  font-family: 'IBM Plex Mono';
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400;
   font-display: swap;
-  src: url('/fonts/geist-mono-latin-wght.woff2') format('woff2-variations');
+  src: url('/fonts/ibm-plex-mono-latin-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-latin-500.woff2') format('woff2');
+}
+
+/* Fallbacks com métrica aproximada: reduzem o salto quando a fonte chega. */
+@font-face {
+  font-family: 'Space Grotesk Fallback';
+  src: local('Arial');
+  size-adjust: 101%;
+  ascent-override: 96%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+}
+
+/* ----------------------------------------------------------------------------
+ * Design tokens. Os nomes do sistema (background-primary, brand-primary…)
+ * ficam em :root; o @theme expõe os mesmos valores como utilitários curtos
+ * do Tailwind (bg-bg, text-brand-light, border-border…).
+ * -------------------------------------------------------------------------- */
+:root {
+  /* Superfícies */
+  --background-primary: #09090d;
+  --background-secondary: #0e0f15;
+  --surface-primary: #14151d;
+  --surface-elevated: #1b1c27;
+  --border-subtle: #252632;
+  --border-emphasis: #38394c;
+
+  /* Identidade violeta — usada com restrição */
+  --brand-primary: #8b5cf6;
+  --brand-hover: #9d75fa;
+  --brand-light: #b79aff;
+  --brand-muted: #7867ad;
+  --brand-ambient: #302345;
+  /* Preenchimento do CTA: brand-primary aprofundado ~8% para que o texto
+     branco passe WCAG AA (4,9:1). Sobre #8B5CF6 puro o branco fica em 4,2:1. */
+  --brand-solid: #7f55e2;
+
+  /* Secundárias — nunca competem com o violeta */
+  --accent-cool: #91a7d8;
+  --accent-success: #62d6a0;
+  --accent-warm: #d6ba96;
+
+  /* Texto. text-muted (4,4:1 sobre o fundo) é reservado a elementos
+     decorativos ou redundantes; metadado informativo usa text-secondary. */
+  --text-primary: #f5f5f7;
+  --text-secondary: #a4a5b0;
+  --text-muted: #747582;
+  --text-disabled: #555661;
+  --text-on-brand: #ffffff;
+
+  /* Motion — as mesmas curvas vivem em src/lib/motion.ts */
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-hover: 200ms;
+  --dur-micro: 280ms;
+  --dur-component: 500ms;
+  --dur-reveal: 700ms;
+  --dur-title: 850ms;
+
+  /* Espaçamento de seção e gutter do grid editorial */
+  --section-y: clamp(5rem, 8.5vw, 8rem);
+  --gutter: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 3rem;
+  }
 }
 
 @theme {
-  --color-bg: #08090b;
-  --color-bg-secondary: #111318;
-  --color-card: #15171c;
-  --color-card-hover: #1a1d24;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
-  --color-text: #f5f5f5;
-  --color-text-secondary: #9a9ca3;
-  --color-text-muted: #64666d;
+  --color-bg: #09090d;
+  --color-bg-secondary: #0e0f15;
+  --color-surface: #14151d;
+  --color-surface-elevated: #1b1c27;
+  --color-border: #252632;
+  --color-border-strong: #38394c;
 
-  --color-accent: #7f5af5;
-  --color-accent-light: #a48bfb;
-  --color-accent-dim: #5b3fc4;
-  --color-accent-cyan: #5eead4;
-  --color-accent-amber: #f5c76f;
-  --color-accent-emerald: #34d399;
-  --color-accent-sky: #38bdf8;
-  --color-accent-rose: #f43f5e;
+  --color-brand: #8b5cf6;
+  --color-brand-hover: #9d75fa;
+  --color-brand-light: #b79aff;
+  --color-brand-muted: #7867ad;
+  --color-brand-ambient: #302345;
+  --color-brand-solid: #7f55e2;
 
-  --font-display: 'Instrument Sans', 'Geist', ui-sans-serif, system-ui, sans-serif;
-  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --color-cool: #91a7d8;
+  --color-success: #62d6a0;
+  --color-warm: #d6ba96;
 
-  --container-content: 1180px;
+  --color-text: #f5f5f7;
+  --color-text-secondary: #a4a5b0;
+  --color-text-muted: #747582;
+  --color-text-disabled: #555661;
+  --color-on-brand: #ffffff;
 
-  /* Sistema de motion — as mesmas curvas vivem em src/lib/motion.ts.
-     Rápido na intenção, suave na parada. Nada elástico. */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
-  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --font-display: 'Space Grotesk', 'Space Grotesk Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
-  --default-transition-duration: 280ms;
-  --default-transition-timing-function: var(--ease-out-quart);
+  /* Escala tipográfica. Os mínimos descem abaixo da referência de desktop
+     para que as quebras funcionem em 360px. */
+  --text-hero: clamp(2.875rem, 14.5vw, 4.5rem);
+  --text-hero--line-height: 0.94;
+  --text-hero-lg: clamp(4.5rem, 7.5vw, 8rem);
+  --text-hero-lg--line-height: 0.92;
+  --text-section: clamp(2.5rem, 5vw, 5.5rem);
+  --text-section--line-height: 0.98;
+  --text-project: clamp(2rem, 3.6vw, 4rem);
+  --text-project--line-height: 1;
+  --text-subtitle: clamp(1.375rem, 1.1rem + 0.7vw, 1.75rem);
+  --text-subtitle--line-height: 1.25;
+  --text-meta: 0.75rem;
+  --text-meta--line-height: 1.5;
+
+  --container-content: 1320px;
+  --container-prose: 38rem;
+
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-:root {
-  /* Escala de duração: micro (feedback) → componente → reveal → editorial → ambiente. */
-  --dur-micro: 150ms;
-  --dur-component: 280ms;
-  --dur-reveal: 600ms;
-  --dur-editorial: 1000ms;
-  --dur-ambient: 28s;
+/* Distância entre planos da escultura do hero. Registrada para poder ser
+   animada por transition: abrir a pilha é uma interpolação de CSS. */
+@property --gap {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 116px;
 }
 
 @layer base {
   * {
-    border-color: var(--color-border);
+    border-color: var(--border-subtle);
   }
 
   html {
-    scroll-behavior: smooth;
     color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
   }
 
-  /* Com o Lenis ativo o scroll programático é dele; o nativo precisa ficar instantâneo. */
-  html.lenis,
-  html.lenis body {
-    height: auto;
-  }
-  html.lenis {
-    scroll-behavior: auto;
-  }
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
-  .lenis.lenis-stopped {
-    overflow: clip;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
+    background-color: var(--background-primary);
+    color: var(--text-primary);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::selection {
-    background-color: var(--color-accent);
-    color: #ffffff;
+    background-color: var(--brand-primary);
+    color: var(--text-on-brand);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-light);
+    outline: 2px solid var(--brand-light);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -123,111 +227,388 @@
     width: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+    background: var(--background-primary);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--color-border-strong);
+    background: var(--border-emphasis);
+    border: 2px solid var(--background-primary);
     border-radius: 999px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-text-muted);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
     *,
     *::before,
     *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
     }
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* ----------------------------------------------------------------------------
+ * Primitivas de layout e tipografia
+ * -------------------------------------------------------------------------- */
 
-  /* Título editorial: a família display com tracking fechado e leading curto. */
-  .display {
-    font-family: var(--font-display);
-    letter-spacing: -0.035em;
-    line-height: 0.98;
-    font-weight: 600;
-  }
+/* Container editorial: 1320px, gutter responsivo. */
+@utility shell {
+  width: 100%;
+  max-width: calc(var(--container-content) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
 
-  /* Rótulo técnico: mono, pequeno, espaçado. */
-  .label {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+/* Grid editorial: 4 → 8 → 12 colunas. */
+@utility grid-editorial {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 1rem;
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: 1.5rem;
   }
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 1.5rem;
+  }
+}
 
-  /* Sublinhado que se desenha da esquerda. Aplicar em links de texto. */
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+/* Headline: Space Grotesk com tracking negativo calibrado pelo tamanho. */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  font-feature-settings: 'ss01', 'ss04';
+}
+
+/* Título intermediário (projetos, camadas): tracking menos fechado. */
+@utility title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+/* Rótulo técnico: mono, pequeno, espaçado. Só para o que é de fato técnico. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0;
+}
+
+/* ----------------------------------------------------------------------------
+ * Microinterações compartilhadas
+ * -------------------------------------------------------------------------- */
+@layer components {
+  /* Sublinhado que se desenha da esquerda e recolhe pela direita. */
   .link-draw {
-    position: relative;
-    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    background-size: 0% 1px;
+    padding-bottom: 0.08em;
+    transition: background-size var(--dur-micro) var(--ease-premium);
   }
-  .link-draw::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.12em;
-    height: 1px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform var(--dur-component) var(--ease-out-quart);
-  }
-  .link-draw:hover::after,
-  .link-draw:focus-visible::after,
-  .group:hover .link-draw::after {
-    transform: scaleX(1);
+  .link-draw:hover,
+  .link-draw:focus-visible,
+  .group:hover .link-draw,
+  .group:focus-visible .link-draw {
+    background-position: 0% 100%;
+    background-size: 100% 1px;
   }
 
-  /* Seta que se desloca 4px para a direita no hover do grupo. */
   .arrow-shift {
-    transition: transform var(--dur-micro) var(--ease-out-quart);
+    transition: translate var(--dur-hover) var(--ease-premium);
   }
   .group:hover .arrow-shift,
   .group:focus-visible .arrow-shift {
-    transform: translateX(4px);
+    translate: 4px 0;
   }
-  .group:hover .arrow-shift-diag,
-  .group:focus-visible .arrow-shift-diag {
-    transform: translate(3px, -3px);
+  .arrow-diag {
+    transition: translate var(--dur-hover) var(--ease-premium);
   }
-  .arrow-shift-diag {
-    transition: transform var(--dur-micro) var(--ease-out-quart);
+  .group:hover .arrow-diag,
+  .group:focus-visible .arrow-diag {
+    translate: 2px -2px;
   }
 
-  /* Pista que percorre o indicador de scroll. */
-  .hero-scroll-trail::after {
+  /* Seta que sai pela direita e volta pela esquerda (CTA principal). */
+  .arrow-loop {
+    position: relative;
+    display: inline-grid;
+    overflow: hidden;
+  }
+  .arrow-loop > * {
+    grid-area: 1 / 1;
+    transition: translate var(--dur-micro) var(--ease-premium);
+  }
+  .arrow-loop > :last-child {
+    translate: -140% 0;
+  }
+  .group:hover .arrow-loop > :first-child,
+  .group:focus-visible .arrow-loop > :first-child {
+    translate: 140% 0;
+  }
+  .group:hover .arrow-loop > :last-child,
+  .group:focus-visible .arrow-loop > :last-child {
+    translate: 0 0;
+  }
+
+  /* Rótulo que rola: o texto sobe e uma cópia entra por baixo. */
+  .label-roll {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+  }
+  .label-roll > span {
+    display: block;
+    transition: translate var(--dur-micro) var(--ease-premium);
+  }
+  .label-roll > span + span {
+    position: absolute;
+    inset: 0;
+    translate: 0 105%;
+  }
+  .group:hover .label-roll > span:first-child,
+  .group:focus-visible .label-roll > span:first-child {
+    translate: 0 -105%;
+  }
+  .group:hover .label-roll > span + span,
+  .group:focus-visible .label-roll > span + span {
+    translate: 0 0;
+  }
+
+  /* Spotlight: luz localizada que segue o ponteiro (vars --mx/--my via
+     useSpotlight). Só a borda acende; o interior recebe um brilho mínimo. */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+  .spotlight::before,
+  .spotlight::after {
     content: '';
     position: absolute;
-    inset-inline: 0;
-    top: 0;
-    height: 40%;
-    border-radius: 999px;
-    background: linear-gradient(to bottom, transparent, var(--color-accent-light));
-    animation: hero-scroll-trail 2.4s var(--ease-in-out-quart) infinite;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--dur-component) var(--ease-ui);
+  }
+  .spotlight::before {
+    z-index: 1;
+    padding: 1px;
+    background: radial-gradient(
+      320px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(183 154 255 / 0.55),
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+  .spotlight::after {
+    z-index: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(139 92 246 / 0.06), transparent 65%);
+  }
+  .spotlight[data-lit='true']::before,
+  .spotlight[data-lit='true']::after {
+    opacity: 1;
   }
 
-  /* Pulso do selo de disponibilidade: lento e discreto. */
-  .badge-pulse {
-    animation: badge-pulse 2.8s var(--ease-out-expo) infinite;
+  /* Cursor nativo escondido só sobre a mídia dos projetos, onde o rótulo
+     contextual o substitui. Apenas com ponteiro fino. */
+  @media (pointer: fine) {
+    .cursor-label-zone {
+      cursor: none;
+    }
   }
-  @keyframes badge-pulse {
+}
+
+/* ----------------------------------------------------------------------------
+ * Ambiente e escultura do hero
+ * -------------------------------------------------------------------------- */
+@layer components {
+  /* Grão: tira a perfeição digital do preto. Camada fixa, sem blend mode. */
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0.32;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+  /* Em toque o grão não compensa a camada de composição em tela cheia. */
+  @media (pointer: coarse) {
+    .grain {
+      display: none;
+    }
+  }
+
+  /* Matriz de pontos do fundo (BlueprintField): pontos nas linhas das
+     colunas do grid editorial. --bp-pitch vem do JS (largura real da coluna
+     + gap); --bp-cols e --bp-gap espelham o grid-editorial. Decorativo. */
+  .blueprint-field,
+  .blueprint-lens {
+    --bp-row: 96px;
+    background-size: var(--bp-pitch, 112px) var(--bp-row);
+    background-repeat: repeat;
+  }
+  .blueprint-field {
+    --bp-cols: 4;
+    --bp-gap: 16px;
+    overflow: hidden;
+    background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.12) 1.1px, transparent 1.7px);
+    background-position: -1px -1px;
+  }
+  @media (min-width: 768px) {
+    .blueprint-field {
+      --bp-cols: 8;
+      --bp-gap: 24px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .blueprint-field {
+      --bp-cols: 12;
+    }
+  }
+  /* A lente mostra a subgrade fina (¼ do passo) — o papel milimetrado sob a
+     malha principal — e reforça os pontos principais em violeta. */
+  .blueprint-lens {
+    will-change: transform;
+    background-image:
+      radial-gradient(circle at 1.5px 1.5px, rgb(183 154 255 / 0.95) 1.5px, transparent 2.2px),
+      radial-gradient(circle at 1px 1px, rgb(183 154 255 / 0.42) 0.8px, transparent 1.4px);
+    background-size:
+      var(--bp-pitch, 112px) var(--bp-row),
+      calc(var(--bp-pitch, 112px) / 4) calc(var(--bp-row) / 4);
+    -webkit-mask-image: radial-gradient(closest-side, #000, rgb(0 0 0 / 0.35) 45%, transparent);
+    mask-image: radial-gradient(closest-side, #000, rgb(0 0 0 / 0.35) 45%, transparent);
+  }
+
+  /* Pausa os loops da escultura fora da tela. Seletor com classe na posição
+     final: um universal (`[data-paused] *`) obrigaria o navegador a checar os
+     ancestrais de todos os elementos da página a cada recálculo de estilo. */
+  [data-paused='true'] :is(.plane-float, .pulse-down, .pulse-up, .node-hit) {
+    animation-play-state: paused;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Flutuação dos planos: amplitude de poucos px, fases defasadas. */
+  .plane-float {
+    animation: plane-float 7.5s var(--ease-in-out) infinite alternate;
+  }
+  @keyframes plane-float {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, 0, 7px);
+    }
+  }
+
+  /* Pulso de energia que percorre um conector entre planos.
+     Ciclo de 6,4s: desce (requisição) e depois sobe (resposta). */
+  .pulse-down {
+    animation: pulse-down 6.4s var(--ease-in-out) infinite;
+  }
+  .pulse-up {
+    animation: pulse-up 6.4s var(--ease-in-out) infinite;
+  }
+  @keyframes pulse-down {
+    0% {
+      transform: translateY(-28px);
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    15% {
+      transform: translateY(var(--gap));
+      opacity: 1;
+    }
+    17%,
+    100% {
+      transform: translateY(var(--gap));
+      opacity: 0;
+    }
+  }
+  @keyframes pulse-up {
+    0% {
+      transform: translateY(var(--gap));
+      opacity: 0;
+    }
+    2% {
+      opacity: 1;
+    }
+    15% {
+      transform: translateY(-28px);
+      opacity: 1;
+    }
+    17%,
+    100% {
+      transform: translateY(-28px);
+      opacity: 0;
+    }
+  }
+
+  /* Nó que acende quando o pulso chega ao plano. */
+  .node-hit {
+    animation: node-hit 6.4s var(--ease-ui) infinite;
+  }
+  @keyframes node-hit {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    3% {
+      opacity: 1;
+    }
+    16% {
+      opacity: 0;
+    }
+  }
+
+  /* Entrada discreta da navbar no primeiro carregamento. */
+  .nav-enter {
+    animation: nav-enter 600ms var(--ease-premium) 120ms both;
+  }
+  @keyframes nav-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Selo de disponibilidade: um anel que se expande devagar. */
+  .status-ping {
+    animation: status-ping 2.8s var(--ease-premium) infinite;
+  }
+  @keyframes status-ping {
     0% {
       transform: scale(1);
-      opacity: 0.55;
+      opacity: 0.5;
     }
     70%,
     100% {
@@ -236,115 +617,40 @@
     }
   }
 
-  @keyframes hero-scroll-trail {
+  /* Fluxo nos diagramas da stack: só corre com a coluna em foco. */
+  .schematic-flow {
+    stroke-dasharray: 6 10;
+    opacity: 0;
+    transition: opacity var(--dur-micro) var(--ease-ui);
+  }
+  .capability:hover .schematic-flow,
+  .capability:focus-within .schematic-flow {
+    opacity: 1;
+    animation: schematic-flow 1.4s linear infinite;
+  }
+  @keyframes schematic-flow {
+    to {
+      stroke-dashoffset: -32;
+    }
+  }
+
+  /* Luz do encerramento: sobe quando o CTA principal está em hover/foco. */
+  #contato:has([data-cta]:hover) .contact-light,
+  #contato:has([data-cta] :focus-visible) .contact-light {
+    opacity: 1;
+  }
+
+  /* Luz que atravessa a escultura montada do encerramento. */
+  .sheen-pass {
+    animation: sheen-pass 9s var(--ease-in-out) 1.2s infinite;
+  }
+  @keyframes sheen-pass {
     0% {
-      transform: translateY(-100%);
-      opacity: 0;
+      transform: translateX(-120%);
     }
-    35% {
-      opacity: 1;
-    }
+    40%,
     100% {
-      transform: translateY(250%);
-      opacity: 0;
-    }
-  }
-
-  /* Grão — tira a perfeição digital do fundo. Camada fixa, sem blend mode
-     (blend em tela cheia custa uma recomposição por frame). ~3% de presença. */
-  .grain {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    pointer-events: none;
-    opacity: 0.4;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-    background-size: 160px 160px;
-  }
-
-  /* Névoa ambiente — massas grandes, baixa opacidade, deriva de ~30s.
-     São gradientes, não blur: a camada é composta, nunca re-rasterizada. */
-  .fog {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    will-change: transform;
-  }
-  .fog-a {
-    animation: fog-drift-a var(--dur-ambient) var(--ease-in-out-quart) infinite alternate;
-  }
-  .fog-b {
-    animation: fog-drift-b calc(var(--dur-ambient) * 1.4) var(--ease-in-out-quart) infinite alternate;
-  }
-  @keyframes fog-drift-a {
-    from {
-      transform: translate3d(0, 0, 0) rotate(-18deg) scale(1);
-    }
-    to {
-      transform: translate3d(-3%, 4%, 0) rotate(-14deg) scale(1.06);
-    }
-  }
-  @keyframes fog-drift-b {
-    from {
-      transform: translate3d(0, 0, 0) rotate(24deg) scale(1);
-    }
-    to {
-      transform: translate3d(4%, -3%, 0) rotate(20deg) scale(1.08);
-    }
-  }
-
-  /* Pulso ambiente da luz de encerramento. */
-  .breathe {
-    animation: breathe calc(var(--dur-ambient) * 0.5) var(--ease-in-out-quart) infinite alternate;
-  }
-  @keyframes breathe {
-    from {
-      transform: translate3d(-50%, 0, 0) scale(1);
-      opacity: 0.8;
-    }
-    to {
-      transform: translate3d(-50%, -2%, 0) scale(1.08);
-      opacity: 1;
-    }
-  }
-
-  /* Ponto que percorre a arquitetura (interface → fronteira → dados → volta). */
-  .request-dot {
-    animation: request-travel 7s var(--ease-in-out-quart) infinite;
-  }
-  @keyframes request-travel {
-    0%,
-    8% {
-      transform: translate3d(-50%, 0, 0);
-      opacity: 0;
-    }
-    14% {
-      opacity: 1;
-    }
-    44% {
-      transform: translate3d(-50%, var(--travel, 0px), 0);
-      opacity: 1;
-    }
-    56% {
-      transform: translate3d(-50%, var(--travel, 0px), 0);
-      opacity: 1;
-    }
-    86% {
-      transform: translate3d(-50%, 0, 0);
-      opacity: 1;
-    }
-    92%,
-    100% {
-      transform: translate3d(-50%, 0, 0);
-      opacity: 0;
-    }
-  }
-
-  /* Cursor nativo escondido só sobre a mídia dos projetos, onde o rótulo
-     "ver caso" o substitui. Apenas com ponteiro fino. */
-  @media (pointer: fine) {
-    .cursor-label-zone {
-      cursor: none;
+      transform: translateX(220%);
     }
   }
 }

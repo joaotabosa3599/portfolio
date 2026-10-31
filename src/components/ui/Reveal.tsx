@@ -5,11 +5,11 @@ import { cn } from '@/lib/utils'
 
 /*
  * O observador fica no wrapper que recorta, não no filho deslocado: um
- * elemento 100% fora do `overflow: hidden` do pai nunca "intersecta" a
- * viewport, então o reveal jamais dispararia. As variantes descem do pai.
+ * elemento 100% fora do `overflow: hidden` do pai nunca intersecta a
+ * viewport, e o reveal jamais dispararia. As variantes descem do pai.
  */
 const lineVariants: Variants = {
-  hidden: { y: '108%' },
+  hidden: { y: '105%' },
   visible: { y: '0%' },
 }
 
@@ -17,32 +17,37 @@ interface RevealLinesProps {
   /** Uma entrada por linha. Aceita nós para destacar palavras. */
   lines: ReactNode[]
   as?: ElementType
+  id?: string
   className?: string
+  /** Classe aplicada a cada linha (ex.: recuo editorial da segunda linha). */
+  lineClassName?: (index: number) => string | undefined
   delay?: number
+  /** Dispara na montagem em vez de esperar a viewport (acima da dobra). */
+  immediate?: boolean
 }
 
 /**
- * Reveal de headline: cada linha sobe de dentro de uma máscara. Reservado para
- * títulos importantes — corpo de texto usa `FadeIn`.
+ * Reveal de headline: cada linha sobe de dentro de uma máscara. O layout é
+ * reservado desde o primeiro quadro (só transform anima), então não há salto.
  */
-export function RevealLines({ lines, as: Tag = 'h2', className, delay = 0 }: RevealLinesProps) {
+export function RevealLines({ lines, as: Tag = 'h2', id, className, lineClassName, delay = 0, immediate = false }: RevealLinesProps) {
+  const trigger = immediate ? { animate: 'visible' } : { whileInView: 'visible', viewport: revealViewport }
   return (
-    <Tag className={className}>
+    <Tag id={id} className={className}>
       {lines.map((line, index) => (
         <motion.span
           key={index}
-          className="block overflow-hidden pb-[0.1em] -mb-[0.1em]"
+          className={cn('block overflow-hidden pb-[0.12em] -mb-[0.12em]', lineClassName?.(index))}
           initial="hidden"
-          whileInView="visible"
-          viewport={revealViewport}
+          {...trigger}
         >
           <motion.span
-            className="block will-change-transform"
+            className="block"
             variants={lineVariants}
-            transition={{ duration: DUR.editorial * 0.9, ease: EASE.outExpo, delay: delay + index * 0.09 }}
+            transition={{ duration: DUR.title, ease: EASE.premium, delay: delay + index * 0.08 }}
           >
             {line}
-            {/* Espaço invisível no fim da linha: leitores de tela não emendam as linhas. */}{' '}
+            {/* Espaço no fim da linha: leitores de tela não emendam as palavras. */}{' '}
           </motion.span>
         </motion.span>
       ))}
@@ -56,17 +61,18 @@ interface FadeInProps {
   delay?: number
   /** Deslocamento vertical de entrada, em px. Pequeno por padrão. */
   y?: number
-  as?: 'div' | 'p' | 'li' | 'span' | 'section' | 'figure'
+  x?: number
+  as?: 'div' | 'p' | 'li' | 'span' | 'section' | 'figure' | 'dl' | 'ul' | 'ol' | 'article'
 }
 
-/** Entrada simples para corpo de texto e blocos: opacidade + 10px. */
-export function FadeIn({ children, className, delay = 0, y = 10, as = 'div' }: FadeInProps) {
+/** Entrada para corpo e blocos: opacidade + deslocamento mínimo. */
+export function FadeIn({ children, className, delay = 0, y = 12, x = 0, as = 'div' }: FadeInProps) {
   const Component = motion[as]
   return (
     <Component
-      className={cn(className)}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
+      className={className}
+      initial={{ opacity: 0, y, x }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={revealViewport}
       transition={revealTransition(delay)}
     >
@@ -75,16 +81,24 @@ export function FadeIn({ children, className, delay = 0, y = 10, as = 'div' }: F
   )
 }
 
-/** Linha fina que se desenha da esquerda para a direita ao entrar. */
-export function Rule({ className, delay = 0 }: { className?: string; delay?: number }) {
+/** Linha fina que se desenha ao entrar. Horizontal por padrão. */
+export function Rule({
+  className,
+  delay = 0,
+  vertical = false,
+}: {
+  className?: string
+  delay?: number
+  vertical?: boolean
+}) {
   return (
     <motion.div
       aria-hidden="true"
-      className={cn('h-px w-full origin-left bg-border', className)}
-      initial={{ scaleX: 0 }}
-      whileInView={{ scaleX: 1 }}
+      className={cn(vertical ? 'w-px origin-top' : 'h-px w-full origin-left', 'bg-border', className)}
+      initial={vertical ? { scaleY: 0 } : { scaleX: 0 }}
+      whileInView={vertical ? { scaleY: 1 } : { scaleX: 1 }}
       viewport={revealViewport}
-      transition={{ duration: DUR.editorial, ease: EASE.outExpo, delay }}
+      transition={{ duration: DUR.title * 1.3, ease: EASE.premium, delay }}
     />
   )
 }

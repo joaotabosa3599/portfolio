@@ -2,7 +2,7 @@
 # Gera variantes responsivas (AVIF + WebP) das imagens de projeto e editoriais.
 #
 #   public/projects/<nome>.jpg  →  public/projects/<nome>-{720,1200,1800}.{avif,webp}
-#   public/editorial/<nome>.jpg →  public/editorial/<nome>-{960,1600,2400}.{avif,webp}
+# 
 #
 # Requer ImageMagick com suporte a AVIF/WebP (`convert -list format`).
 # Os JPGs originais ficam como fallback do atributo `src`.

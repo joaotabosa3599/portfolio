@@ -23,7 +23,7 @@ export function usePointerScene(ref: RefObject<HTMLElement | null>, enabled = tr
     const el = ref.current
     if (!el || !enabled) return
 
-    const finePointer = window.matchMedia('(pointer: fine)')
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (!finePointer.matches || reducedMotion.matches) return
 

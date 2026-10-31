@@ -1,23 +1,16 @@
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import { scrollTo, startSmoothScroll, stopSmoothScroll, ScrollTrigger } from '@/lib/scroll'
+import { scrollTo } from '@/lib/scroll'
 
 /**
- * Dono do scroll da aplicação:
- *  - inicia/encerra o scroll suave (Lenis) uma vez;
- *  - resolve navegação por âncora (`/#projetos`) com offset da navbar,
- *    suave dentro da mesma página e instantânea ao trocar de rota;
- *  - volta ao topo ao trocar de página sem hash;
- *  - pede ao ScrollTrigger que recalcule depois de cada troca de rota.
+ * Dono da navegação por âncora:
+ *  - `/#projetos` rola até a seção com o offset da navbar — suave dentro da
+ *    mesma página, instantâneo ao chegar de outra rota;
+ *  - trocar de página sem hash volta ao topo.
  */
 export function ScrollManager() {
   const location = useLocation()
   const previousPath = useRef(location.pathname)
-
-  useEffect(() => {
-    startSmoothScroll()
-    return () => stopSmoothScroll()
-  }, [])
 
   useEffect(() => {
     const changedRoute = previousPath.current !== location.pathname
@@ -25,22 +18,20 @@ export function ScrollManager() {
 
     if (location.hash) {
       const id = decodeURIComponent(location.hash.slice(1))
-      const el = document.getElementById(id)
-      if (el) {
-        // Ao chegar de outra rota, a página acabou de montar: pular direto evita
-        // uma animação de scroll sobre um layout que ainda está assentando.
-        scrollTo(el, { immediate: changedRoute })
+      // Ao chegar de outra rota a seção pode ainda não existir (a home monta o
+      // que está abaixo do hero numa transição): tenta de novo nos próximos frames.
+      let tries = 0
+      let frame = 0
+      const attempt = () => {
+        const el = document.getElementById(id)
+        if (el) scrollTo(el, { immediate: changedRoute })
+        else if (tries++ < 180) frame = requestAnimationFrame(attempt)
       }
-    } else if (changedRoute) {
-      scrollTo(0, { immediate: true })
+      frame = requestAnimationFrame(attempt)
+      return () => cancelAnimationFrame(frame)
     }
 
-    // Página nova, triggers novos. Só ao trocar de rota: um refresh no meio de
-    // um scroll suave nativo (sem Lenis, no toque) restaura a posição anterior
-    // e cancela a animação de scroll antes de ela chegar à âncora.
-    if (!changedRoute) return
-    const frame = requestAnimationFrame(() => ScrollTrigger.refresh())
-    return () => cancelAnimationFrame(frame)
+    if (changedRoute) scrollTo(0, { immediate: true })
   }, [location])
 
   return null
