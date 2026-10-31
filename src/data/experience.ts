@@ -42,8 +42,9 @@ export const experience: ExperienceEntry[] = [
     org: 'Loading Jr',
     role: 'Trainee · Front-end',
     summary:
-      'Processo seletivo com o CineSol Cinema, em dupla e a partir de um design no Figma. Depois, o front-end da GoUp Training em equipe: área do dentista, painel administrativo e site institucional.',
+      'Processo seletivo com o CineSol Cinema, em dupla e a partir de um design no Figma. Depois, o front-end da GoUp Training em equipe: área do dentista, painel administrativo e site institucional. Por fim, o redesign do site da própria Loading.',
     work: [
+      { label: 'Site da Loading Jr', slug: 'site-loading' },
       { label: 'GoUp Training', slug: 'goup-training' },
       { label: 'CineSol Cinema', slug: 'cinesol-cinema' },
     ],

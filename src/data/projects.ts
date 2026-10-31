@@ -312,6 +312,68 @@ export const projects: Project[] = [
     },
   },
   {
+    id: 'site-loading',
+    showcase: true,
+    kindLabel: 'Redesign · Loading Jr',
+    brief: {
+      problem:
+        'O site da empresa júnior tinha cara de template: ilustrações genéricas, muito espaço vazio e nenhuma página para os projetos que o time entrega.',
+      contribution:
+        'Redesign e desenvolvimento do site inteiro: identidade nova a partir do Figma da marca, intro em GSAP, cenas 3D geradas por código, portfólio com uma página por projeto, time, 404 e cursor próprios.',
+      result: 'Pronto e no ar em prévia, aguardando a aprovação final para ir para o domínio oficial.',
+    },
+    highlight: {
+      label: '3D com plano B',
+      lines: ['WebGL2 por hardware → cena 3D', 'sem GPU → desenho em CSS', 'reduzir movimento → intro pulada'],
+    },
+    slug: 'site-loading',
+    title: 'Site da Loading Jr',
+    tagline: 'Redesign completo do site da empresa júnior de desenvolvimento da UFC em Sobral: identidade nova, intro animada e cenas 3D geradas por código.',
+    category: 'Landing Page',
+    featured: false,
+    isPlaceholder: false,
+    inProgress: true,
+    kind: 'corporate',
+    role: 'Desenvolvedor do redesign na Loading Jr',
+    tech: ['Next.js', 'TypeScript', 'Three.js', 'GSAP', 'Tailwind CSS', 'Playwright'],
+    links: {
+      live: 'https://site-loading-nextjs-eight.vercel.app',
+    },
+    accent: 'violet',
+    image: '/projects/site-loading.jpg',
+    caseStudy: {
+      overview:
+        'A Loading Desenvolvimento Jr. é a empresa júnior de desenvolvimento da UFC em Sobral, que faz sites, sistemas e aplicativos para micro e pequenas empresas. O redesign refez o site de ponta a ponta: home com intro animada e cenas 3D, portfólio com uma página para cada projeto, página do time, Sobre, Links e uma 404 própria.',
+      problem:
+        'O site antigo tinha grandes áreas brancas sem propósito, ilustrações de template, títulos sem personalidade e serviços apresentados em blocos de texto. O roxo da marca aparecia sem um sistema por trás, e os projetos entregues pelo time não tinham onde ser mostrados.',
+      process:
+        'Comecei pela direção: os tokens de cor e a tipografia do arquivo de rebranding no Figma, um diagnóstico do site antigo e regras que não podiam ser quebradas, como não inventar clientes, números ou cases. O desenvolvimento foi feito com um agente de IA (Claude Code) executando esse briefing, com cada etapa verificada por build, testes de ponta a ponta e screenshots em várias larguras. Os dados do portfólio vieram dos repositórios reais dos clientes.',
+      solution:
+        'O site tem uma intro em GSAP em que a barra de carregamento vira o logo, cenas 3D em Three.js e React Three Fiber feitas inteiramente por código (símbolos em texto 3D e o anel do logo extrudado do vetor da marca), transições entre páginas com a View Transitions API, um cursor neon próprio e uma 404 em que o carregamento trava em 40,4%. Aparelhos sem GPU recebem um desenho em CSS no lugar do 3D.',
+      technologies: [
+        'Next.js 16 (App Router)',
+        'React 19',
+        'TypeScript',
+        'Tailwind CSS 4',
+        'Three.js + React Three Fiber',
+        'GSAP',
+        'View Transitions API',
+        'Playwright (E2E)',
+        'Claude Code',
+      ],
+      challenges:
+        'Manter o 3D e as animações sem pesar no celular. As cenas montam uma por vez, só perto da tela, e liberam o WebGL quando ficam longe; com isso o bloqueio da thread principal no carregamento da home caiu de ~650 para ~340 ms num Pixel 7 simulado, sem mudar o visual. Depois, uma auditoria de 300 a 2560 px deixou todas as páginas sem estouro horizontal, inclusive no celular deitado.',
+      result:
+        'O site está pronto, com 41 testes de ponta a ponta no computador e no celular, e no ar em prévia enquanto aguarda a aprovação final para substituir a versão atual no domínio oficial.',
+      gallerySteps: [
+        'Intro animada e banner com 3D',
+        'Serviços, processo e diferenciais',
+        'Portfólio com uma página por projeto',
+        'Time, Sobre, Links e 404',
+      ],
+    },
+  },
+  {
     id: 'goup-training',
     showcase: true,
     kindLabel: 'Front-end em equipe · Loading Jr',
