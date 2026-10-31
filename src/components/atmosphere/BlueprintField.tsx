@@ -86,7 +86,7 @@ export function BlueprintField() {
   }, [])
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden print:hidden">
       <div className="shell h-full">
         <div ref={fieldRef} className="blueprint-field relative h-full">
           <div

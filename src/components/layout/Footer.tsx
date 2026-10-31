@@ -15,7 +15,7 @@ export function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-bg">
+    <footer className="border-t border-border bg-bg print:hidden">
       <div className="shell grid-editorial gap-y-12 pb-10 pt-16 sm:pt-20">
         <div className="col-span-4 md:col-span-8 lg:col-span-5">
           <Monogram className="text-5xl sm:text-6xl" />
@@ -48,6 +48,11 @@ export function Footer() {
               <a href={`mailto:${site.email}`} className="link-draw text-text-secondary transition-colors hover:text-text">
                 Email
               </a>
+            </li>
+            <li>
+              <Link to="/perfil" className="link-draw text-text-secondary transition-colors hover:text-text">
+                Currículo
+              </Link>
             </li>
             <li>
               <ExternalLink href={site.social.linkedin}>LinkedIn</ExternalLink>

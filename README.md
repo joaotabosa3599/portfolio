@@ -29,13 +29,14 @@ src/
     stack/        # diagramas técnicos das capacidades
     ui/           # Button, Reveal, SectionHeading, Picture, Deco, Monogram…
   sections/       # Hero, Projects, About, Capabilities, Experience, Contact
-  pages/          # Home, estudo de caso (lazy), 404 (lazy)
-  data/           # projetos, capacidades, experiência, site
+  pages/          # Home, estudo de caso, perfil/currículo e 404 (lazy)
+  data/           # projetos, capacidades, experiência, perfil, site
   hooks/          # scrollspy, spotlight, magnético, cursor contextual, ponteiro
   lib/            # motion.ts (tokens de motion), scroll.ts, project.ts, utils
 public/
   fonts/          # Space Grotesk, Geist e IBM Plex Mono (subset latin, auto-hospedadas)
   projects/       # screenshots (+ variantes -720/-1200/-1800 em AVIF e WebP)
+  profile/        # retrato do /perfil (+ variantes -480/-720/-920)
 ```
 
 ## Design system
@@ -69,6 +70,12 @@ Curvas: `premium` `cubic-bezier(0.22, 1, 0.36, 1)`, `ui` `cubic-bezier(0.4, 0, 0
 Edite `src/data/projects.ts` e adicione um novo objeto ao array `projects`, seguindo o tipo `Project` em `src/types/project.ts`. Com `showcase: true` o projeto entra na galeria principal (com `brief` e `highlight`, que vira a ficha "Decisão"); o primeiro vira o destaque e, com cinco ou mais, os dois últimos formam o par compacto. Sem `showcase`, vai para o índice "Outros projetos". A página de estudo de caso (`/projetos/:slug`) é gerada automaticamente.
 
 Coloque a screenshot em `public/projects/<slug>.jpg` (2560×1600) e rode `scripts/optimize-images.sh` para gerar as variantes responsivas.
+
+## Perfil / currículo
+
+`/perfil` (e `/curriculo`, que redireciona) é o currículo em formato de documento: retrato, resumo, experiência, formação, competências e os projetos que a experiência não cita. Usa os mesmos dados da home (`experience.ts`, `skills.ts`, `projects.ts`) mais `src/data/profile.ts` (resumo e foto), então as duas nunca divergem. "Salvar em PDF" abre o diálogo de impressão: o CSS de `@media print` em `src/index.css` troca os tokens pela versão clara e o conteúdo cabe em duas páginas A4.
+
+Para trocar o retrato, substitua `public/profile/joao-tabosa.jpg` (4:5) e rode `scripts/optimize-images.sh`.
 
 ## Pendências para substituir
 

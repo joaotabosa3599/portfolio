@@ -41,7 +41,7 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          'nav-enter fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,height,backdrop-filter] duration-[var(--dur-component)] ease-premium',
+          'nav-enter fixed inset-x-0 top-0 z-50 print:hidden transition-[background-color,border-color,height,backdrop-filter] duration-[var(--dur-component)] ease-premium',
           'border-b',
           scrolled || menuOpen
             ? 'h-15 border-border/80 bg-bg/80 backdrop-blur-xl backdrop-saturate-150'
@@ -110,6 +110,18 @@ export function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-1 md:flex">
+            <Link
+              to="/perfil"
+              aria-current={pathname === '/perfil' ? 'page' : undefined}
+              className={cn(
+                'mr-2 inline-flex h-9 items-center rounded-full border px-4 text-[0.8125rem] transition-colors duration-[var(--dur-hover)]',
+                pathname === '/perfil'
+                  ? 'border-brand-muted text-text'
+                  : 'border-border-strong text-text-secondary hover:border-text-muted hover:text-text',
+              )}
+            >
+              Currículo
+            </Link>
             <SocialIcon href={site.social.github} label="GitHub">
               <GithubIcon size={17} />
             </SocialIcon>

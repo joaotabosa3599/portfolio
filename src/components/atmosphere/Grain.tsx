@@ -3,5 +3,5 @@
  * percebido conscientemente, só sentido como ausência de "chapado".
  */
 export function Grain() {
-  return <div className="grain" aria-hidden="true" />
+  return <div className="grain print:hidden" aria-hidden="true" />
 }

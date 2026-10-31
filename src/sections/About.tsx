@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { FadeIn, Rule } from '@/components/ui/Reveal'
 import { SectionMarker, SectionTitle } from '@/components/ui/SectionHeading'
 import { LAYERS } from '@/components/hero/layers'
@@ -41,6 +43,12 @@ export function About() {
                   </FadeIn>
                 ))}
               </dl>
+              <FadeIn delay={facts.length * 0.06}>
+                <Link to="/perfil" className="group mt-6 inline-flex items-center gap-2 text-sm text-text transition-colors hover:text-brand-light">
+                  <span className="link-draw">Currículo completo</span>
+                  <ArrowRight size={14} aria-hidden="true" className="arrow-shift" />
+                </Link>
+              </FadeIn>
             </div>
             {/* Linha de construção que separa ficha e texto. */}
             <Rule vertical className="absolute -right-3 top-0 hidden h-full lg:block" />

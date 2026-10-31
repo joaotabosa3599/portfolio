@@ -14,6 +14,10 @@ export interface ExperienceEntry {
   work?: ExperienceWork[]
   stack?: string[]
   status: 'current' | 'completed'
+  /** Formação acadêmica: no currículo (/perfil) vai para a seção própria. */
+  education?: boolean
+  /** Projeto próprio: no currículo o nome do projeto vira o título da entrada. */
+  personal?: boolean
 }
 
 /**
@@ -61,6 +65,7 @@ export const experience: ExperienceEntry[] = [
     work: [{ label: 'Debrief', slug: 'debrief' }],
     stack: ['Next.js', 'Supabase', 'PostgreSQL', 'React Three Fiber', 'ECharts'],
     status: 'current',
+    personal: true,
   },
   {
     id: 'ufc',
@@ -69,5 +74,6 @@ export const experience: ExperienceEntry[] = [
     role: 'Engenharia da Computação',
     summary: 'Fundamentos de computação, estruturas de dados e arquitetura de software — a base de tudo acima.',
     status: 'current',
+    education: true,
   },
 ]

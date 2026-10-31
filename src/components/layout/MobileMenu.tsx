@@ -129,6 +129,14 @@ export function MobileMenu({ open, onClose, resolveHref, activeId, returnFocusRe
             exit={{ opacity: 0, transition: { duration: DUR.hover } }}
             className="shell space-y-6 pb-[max(2rem,env(safe-area-inset-bottom))] pt-10"
           >
+            <Link
+              to="/perfil"
+              onClick={onClose}
+              className="flex items-center justify-between border-b border-border pb-6 text-lg text-text"
+            >
+              Currículo e perfil
+              <ArrowUpRight size={18} aria-hidden="true" className="text-text-secondary" />
+            </Link>
             <AvailabilityBadge label={site.status} />
             <a href={`mailto:${site.email}`} className="block break-all text-lg text-text">
               {site.email}

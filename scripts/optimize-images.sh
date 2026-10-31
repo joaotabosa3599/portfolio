@@ -2,7 +2,8 @@
 # Gera variantes responsivas (AVIF + WebP) das imagens de projeto e editoriais.
 #
 #   public/projects/<nome>.jpg  →  public/projects/<nome>-{720,1200,1800}.{avif,webp}
-# 
+#   public/editorial/<nome>.jpg →  public/editorial/<nome>-{960,1600,2400}.{avif,webp}
+#   public/profile/<nome>.jpg   →  public/profile/<nome>-{480,720,920}.{avif,webp}
 #
 # Requer ImageMagick com suporte a AVIF/WebP (`convert -list format`).
 # Os JPGs originais ficam como fallback do atributo `src`.
@@ -37,5 +38,12 @@ if compgen -G "public/editorial/*.jpg" > /dev/null; then
   for f in public/editorial/*.jpg; do
     [[ "$f" == *-960.* || "$f" == *-1600.* || "$f" == *-2400.* ]] && continue
     generate "$f" 960 1600 2400
+  done
+fi
+
+if compgen -G "public/profile/*.jpg" > /dev/null; then
+  for f in public/profile/*.jpg; do
+    [[ "$f" == *-480.* || "$f" == *-720.* || "$f" == *-920.* ]] && continue
+    generate "$f" 480 720 920
   done
 fi

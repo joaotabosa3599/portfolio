@@ -654,3 +654,57 @@
     }
   }
 }
+
+/* ----------------------------------------------------------------------------
+ * Impressão — o /perfil vira um currículo A4 claro ("Salvar em PDF" abre o
+ * diálogo de impressão). Os tokens são redefinidos, então os utilitários do
+ * Tailwind (text-text, border-border…) já saem na versão de papel.
+ * -------------------------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4;
+    margin: 13mm 14mm 14mm;
+  }
+
+  :root {
+    --background-primary: #ffffff;
+    --text-primary: #111114;
+    --color-bg: #ffffff;
+    --color-bg-secondary: #ffffff;
+    --color-surface: #ffffff;
+    --color-surface-elevated: #ffffff;
+    --color-border: #dcdce2;
+    --color-border-strong: #c4c4cc;
+    --color-text: #111114;
+    --color-text-secondary: #4a4b55;
+    --color-brand-light: #5b36c9;
+    --color-brand-muted: #7b62c9;
+  }
+
+  html {
+    color-scheme: light;
+    font-size: 12px;
+  }
+
+  body {
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Entradas que nunca chegaram à viewport ficariam invisíveis no papel. */
+  .profile-doc,
+  .profile-doc * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .profile-doc a {
+    background-image: none;
+    text-decoration: none;
+  }
+
+  .cv-entry {
+    break-inside: avoid;
+  }
+}
