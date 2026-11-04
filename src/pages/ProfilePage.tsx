@@ -132,8 +132,12 @@ export function ProfilePage() {
             </motion.dl>
 
             <motion.div {...enter(0.55)} className="mt-8 flex flex-wrap items-center gap-3 print:hidden">
-              <Button onClick={() => window.print()} leadingIcon={<FileDown size={16} strokeWidth={1.75} />}>
-                Salvar em PDF
+              <Button
+                href="/curriculo/joao-tabosa-cv-en.pdf"
+                download="Joao-Tabosa-CV-EN.pdf"
+                leadingIcon={<FileDown size={16} strokeWidth={1.75} />}
+              >
+                Baixar currículo (PDF, inglês)
               </Button>
               <Button href={`mailto:${site.email}`} variant="secondary" icon={<ArrowUpRight size={16} />}>
                 Enviar email
