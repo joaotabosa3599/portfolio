@@ -31,13 +31,15 @@ export const experience: ExperienceEntry[] = [
     org: 'RF Group',
     role: 'Estágio em Desenvolvimento',
     summary:
-      'Serviços compartilhados pelo grupo inteiro, com a fronteira de acesso decidida no banco: schemas isolados, RPCs security definer, RLS e webhooks assinados. Do schema ao app nativo.',
+      'Serviços compartilhados pelo grupo inteiro, com a fronteira de acesso decidida no banco: schemas isolados, RPCs security definer, RLS e webhooks assinados. Do schema ao app nativo. Também automações: bot de WhatsApp para clientes e robô de leitura do sistema de processos.',
     work: [
       { label: 'Connect Valley 2026', slug: 'connect-valley' },
       { label: 'Mapa DISC', slug: 'mapa-disc' },
       { label: 'Central de Chamados RFG', slug: 'central-chamados' },
+      { label: 'Bot do Previdenciário', slug: 'bot-previdenciario' },
+      { label: 'Bot de Relatório Diário', slug: 'bot-relatorio' },
     ],
-    stack: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'RLS', 'Capacitor', 'Vitest'],
+    stack: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'RLS', 'Capacitor', 'Node.js', 'Python', 'Vitest'],
     status: 'current',
   },
   {

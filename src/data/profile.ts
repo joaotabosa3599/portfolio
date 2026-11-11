@@ -14,8 +14,8 @@ export const profile = {
   },
   /** Primeiro parágrafo em destaque; os demais em corpo. */
   summary: [
-    'Full-Stack Developer e estudante de Engenharia da Computação na UFC. Construo produtos inteiros: da modelagem do schema e das permissões no banco até a última animação da interface.',
-    'Comecei pelo front-end. Construir aplicações do zero — banco, autenticação, APIs em tempo real e a interface — me levou ao full-stack de verdade. Hoje, no estágio na RF Group, faço serviços compartilhados pelo grupo inteiro, com a fronteira de acesso decidida no banco.',
+    'Full-Stack Developer e desenvolvedor de automações, estudante de Engenharia da Computação na UFC. Construo produtos inteiros, da modelagem do schema e das permissões no banco até a última animação da interface, e bots que tiram o trabalho repetido da equipe.',
+    'Comecei pelo front-end. Construir aplicações do zero — banco, autenticação, APIs em tempo real e a interface — me levou ao full-stack de verdade. Hoje, no estágio na RF Group, faço serviços compartilhados pelo grupo inteiro, com a fronteira de acesso decidida no banco, e automações: um bot de WhatsApp para os clientes do previdenciário e um robô que lê o sistema de processos pela equipe.',
     'Em paralelo mantenho o Debrief, um SaaS de diário de trading que uso como laboratório de arquitetura e produto antes de levar as ideias para o trabalho.',
   ],
   /** Princípios de trabalho, no formato de lista curta de currículo. */

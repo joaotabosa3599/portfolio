@@ -537,4 +537,178 @@ export const projects: Project[] = [
       gallerySteps: ['Tabuleiro interativo', 'Detecção de vitória/empate', 'Histórico de jogadas', 'Placar da sessão'],
     },
   },
+  {
+    id: 'bot-previdenciario',
+    area: 'automacao',
+    showcase: true,
+    kindLabel: 'Bot de WhatsApp · RF Group',
+    brief: {
+      problem:
+        'O setor previdenciário respondia à mão, uma a uma, as mesmas dúvidas no WhatsApp (documentos, perícia, prazos, RPV, golpes), e isso tirava tempo do que só a equipe pode fazer.',
+      contribution:
+        'As regras de negócio vieram antes do código. Fiz o motor de menu e palavras-chave, a conexão por QR code, o painel em que o setor aprova cada texto, o relatório de uso e o arquivo de conversas cifrado.',
+      result:
+        'Em testes com o setor: já respondeu numa conversa real e aguarda a aprovação final dos textos para atender clientes. São 608 testes automatizados.',
+    },
+    highlight: {
+      label: 'sem IA na resposta',
+      lines: ['menu numerado + palavras-chave', 'só texto aprovado pelo setor vai ao ar', 'caso pessoal → equipe, bot cala 12 h'],
+    },
+    slug: 'bot-previdenciario',
+    title: 'Bot do Previdenciário',
+    tagline:
+      'Atendimento automático no WhatsApp para os clientes do setor previdenciário. Responde as dúvidas frequentes com textos aprovados pelo setor e passa para a equipe tudo o que é do caso da pessoa. Nenhuma resposta é gerada por IA.',
+    category: 'Automação',
+    featured: false,
+    isPlaceholder: false,
+    kind: 'corporate',
+    role: 'Estagiário de Desenvolvimento na RF Group',
+    collaboration:
+      'A transcrição de áudios e o modo de aprendizado foram feitos por Antonio Breno Oliveira Magalhães, colega de equipe.',
+    inProgress: true,
+    tech: ['Node.js', 'TypeScript', 'Fastify', 'WhatsApp (Baileys)', 'SQLite', 'Zod', 'Vitest'],
+    links: {},
+    accent: 'violet',
+    image: '/projects/bot-previdenciario.jpg',
+    frameLabel: 'WhatsApp · cliente fictício',
+    statusLabel: { label: 'Em testes com o setor', live: false },
+    caseStudy: {
+      overview:
+        'Assistente de WhatsApp do setor previdenciário de um escritório de advocacia. Ele tira as dúvidas gerais sobre INSS e benefícios e entrega à equipe, com aviso, tudo o que depende do processo da pessoa.',
+      problem:
+        'As perguntas se repetem o dia inteiro: o que levar na perícia, quanto tempo demora, quando sai a RPV, se uma mensagem é golpe. Num tema sensível, o bot não pode errar nem inventar. Por isso o escritório pediu um bot sem IA, com textos revisados pelo próprio setor.',
+      process:
+        'Comecei escrevendo as regras de negócio, numeradas, e só depois fui para o código. O entendimento usa menu numerado e palavras-chave com exemplos e contraexemplos por tópico, testados contra um corpus de perguntas. A camada do WhatsApp é separada do motor, e um simulador de terminal reproduz a conversa inteira sem celular nenhum.',
+      solution:
+        'O cliente recebe boas-vindas, um aviso de privacidade e o menu. A resposta a uma dúvida comum é o texto aprovado pelo setor. Quando a conversa é sobre o caso dele (andamento, documento enviado, notícia ruim), o bot passa para a equipe, avisa se está fora do horário e fica calado naquela conversa por até 12 horas. Se alguém da equipe responde pelo aplicativo, o bot também se cala. O setor usa um painel para aprovar ou pedir ajuste em cada texto e ver o relatório de uso.',
+      technologies: [
+        'Node.js 24',
+        'TypeScript',
+        'Fastify',
+        'WhatsApp por QR code (Baileys)',
+        'SQLite (node:sqlite)',
+        'Zod',
+        'YAML para o conteúdo',
+        'Criptografia RSA no arquivo de conversas',
+        'Vitest (608 testes)',
+      ],
+      challenges:
+        'Saber quando não responder. Uma palavra solta não basta: "perícia" numa dúvida geral é uma coisa, mas "minha perícia foi negada" é caso pessoal. Cada tópico ganhou exemplos e contraexemplos, e todo o corpus roda nos testes. O outro desafio foi a privacidade: as conversas guardadas ficam cifradas com uma chave pública, a chave privada nunca vai para o servidor, e os números da equipe ficam fora de toda análise.',
+      result:
+        'O bot respondeu numa conversa real e está em testes com o setor, à espera da aprovação final dos textos para atender clientes. Os 608 testes automatizados cobrem o motor, o canal, a persistência e o conteúdo.',
+      gallerySteps: [
+        'Boas-vindas, aviso de privacidade e menu',
+        'Dúvida comum com texto aprovado',
+        'Caso pessoal vai para a equipe',
+        'Painel de aprovação dos textos',
+      ],
+    },
+  },
+  {
+    id: 'bot-relatorio',
+    area: 'automacao',
+    showcase: true,
+    kindLabel: 'Robô de leitura · RF Group',
+    brief: {
+      problem:
+        'Para saber o que vencia e o que tinha ficado para trás, alguém da equipe jurídica precisava abrir o sistema de processos tela por tela: agenda, tarefas atrasadas, intimações sem tarefa.',
+      contribution:
+        'Construí do zero o robô que navega no sistema só lendo, as cinco funções, o relatório do dia em HTML e PDF, e o painel semanal para a gestão.',
+      result:
+        'Roda com dados reais do escritório: as cinco funções juntas levam cerca de 3 minutos. São 253 testes automatizados.',
+    },
+    highlight: {
+      label: 'só leitura',
+      lines: ['bloqueio de envio ligado antes do login', 'sem bloqueio ativo → nenhuma função roda', 'o painel dos bots recebe só contagens'],
+    },
+    slug: 'bot-relatorio',
+    title: 'Bot de Relatório Diário',
+    tagline:
+      'Assistente da equipe jurídica. Entra no sistema de processos do escritório, só lê e entrega o relatório do dia: agenda, prazos atrasados, intimações esquecidas, processos parados e a conferência das planilhas.',
+    category: 'Automação',
+    featured: false,
+    isPlaceholder: false,
+    kind: 'corporate',
+    role: 'Estagiário de Desenvolvimento na RF Group',
+    tech: ['Python', 'Selenium', 'Chrome headless', 'HTML/PDF', 'unittest'],
+    links: {},
+    accent: 'amber',
+    image: '/projects/bot-relatorio.jpg',
+    frameLabel: 'relatório do dia · dados fictícios',
+    statusLabel: { label: 'Uso interno', live: true },
+    caseStudy: {
+      overview:
+        'É um dos bots da automação do escritório. Ele entra no VIOS, o sistema de gestão de processos, e lê agenda, tarefas, intimações e processos. Não altera nada e transforma o que leu num relatório do dia com o que é urgente primeiro.',
+      problem:
+        'Prazo atrasado e intimação sem tarefa só aparecem para quem procura, tela por tela. O robô precisava enxergar tudo isso sem nenhum risco de clicar em "Salvar", "Concluir" ou "Excluir" num sistema jurídico em produção.',
+      process:
+        'Mapeei as telas do sistema ao vivo, só lendo, e descobri que quase todas as pesquisas abrem por GET com os filtros na URL. A leitura passou a ser por endereço e em janelas, porque o sistema recusa mais de 1.000 linhas. Quando uma janela vem cheia, ela é dividida ao meio. Cada função tem fixtures fictícias e um modo de demonstração que roda sem senha e sem o sistema.',
+      solution:
+        'São cinco funções num relatório só: a agenda de hoje e amanhã, o placar de tarefas atrasadas por responsável e por idade, as intimações sem tarefa, os processos parados e a conferência das planilhas de outro bot, que diz o que já está cadastrado e o que é novo. Uma vez por semana sai também um painel em PDF para a gestão, com a taxa de resolução e a carga de cada advogado.',
+      technologies: [
+        'Python 3.12',
+        'Selenium',
+        'Chrome headless',
+        'Leitura por GET com janelas',
+        'Relatório em HTML e PDF',
+        'unittest (253 testes)',
+        'launchd / cron',
+      ],
+      challenges:
+        'Garantir que o robô não escreva nada. Um bloqueio de envio é ligado no navegador antes do login: formulários, POST e sendBeacon ficam barrados, menos as pesquisas que o próprio bot marca e confere. Se o bloqueio não estiver ativo, nenhuma função roda, e se ele cair no meio, a execução para. O painel que acompanha os bots só recebe contagens: nomes, números de processo e links são removidos antes de qualquer evento sair.',
+      result:
+        'Roda com dados reais do escritório, com as cinco funções em cerca de 3 minutos, e o resultado bate com os painéis do próprio sistema. A imagem é do modo de demonstração, com dados fictícios.',
+      gallerySteps: [
+        'Agenda de hoje e amanhã',
+        'Placar de prazos atrasados',
+        'Intimações sem tarefa',
+        'Painel semanal em PDF',
+      ],
+    },
+  },
+  {
+    id: 'bot-connect-valley',
+    area: 'automacao',
+    showcase: true,
+    kindLabel: 'Bot de WhatsApp',
+    brief: {
+      problem:
+        'A equipe que organizava o Connect Valley 2026 queria um lembrete diário no grupo até o dia do evento, sem ninguém ter que mandar à mão.',
+      contribution:
+        'Fiz o bot inteiro em Node: conexão por QR code exibido numa página web, mensagem agendada às 5h, comandos de status, nova tentativa no envio e reconexão sem duplicar agendamentos.',
+      result: 'Publicado no Render. A conexão por QR feita aqui virou a base do Bot do Previdenciário.',
+    },
+    highlight: {
+      label: 'reconexão',
+      lines: ['QR na página → aparelho conectado', 'cron às 05:00 (America/Fortaleza)', 'reconectou? a agenda não duplica'],
+    },
+    slug: 'bot-connect-valley',
+    title: 'Bot Connect Valley',
+    tagline:
+      'Bot de WhatsApp para o grupo da organização do Connect Valley 2026. Mandava a contagem regressiva para o evento todo dia às 5h e respondia comandos de status.',
+    category: 'Automação',
+    featured: false,
+    isPlaceholder: false,
+    tech: ['Node.js', 'WhatsApp (Baileys)', 'node-cron', 'Express', 'Render'],
+    links: {},
+    accent: 'sky',
+    image: '/projects/bot-connect-valley.jpg',
+    frameLabel: 'WhatsApp · grupo da equipe',
+    caseStudy: {
+      overview:
+        'Um bot pequeno e completo, feito para o grupo de WhatsApp da organização do Connect Valley 2026. A cada manhã ele lembrava quantos dias faltavam para o evento.',
+      problem:
+        'O lembrete diário dependia de alguém lembrar de mandar. O bot também precisava ficar no ar num servidor gratuito, que dorme e reinicia, sem perder a conexão nem mandar a mensagem duas vezes.',
+      process:
+        'Comecei pela conexão: o QR code aparece numa página web do próprio bot, e a sessão fica salva em disco para sobreviver aos reinícios. Depois vieram a agenda no fuso de Fortaleza, os comandos e o tratamento dos identificadores novos do WhatsApp.',
+      solution:
+        'Às 5h o bot manda no grupo quantos dias faltam, chamando a cada dia uma pessoa diferente do time. Os comandos !status, !ping e !teste dizem se ele está conectado. O envio tem nova tentativa, a agenda é criada uma vez só mesmo depois de reconectar, e um auto-ping a cada 10 minutos impede que o servidor durma.',
+      technologies: ['Node.js', 'Baileys (WhatsApp Web)', 'node-cron', 'Express', 'Render'],
+      challenges:
+        'Manter a conexão estável num servidor gratuito: só apagar a sessão em logout de verdade, não criar agendamentos repetidos a cada reconexão e lidar com o WhatsApp, que às vezes manda um identificador LID no lugar do número.',
+      result:
+        'Ficou publicado no Render com a contagem automática. Foi aqui que aprendi a conexão por QR e a manter um bot de WhatsApp de pé, o que serviu de base para o Bot do Previdenciário.',
+      gallerySteps: ['Página com o QR code', 'Contagem às 5h no grupo', 'Comandos de status', 'Reconexão sem duplicar'],
+    },
+  },
 ]

@@ -35,7 +35,7 @@ export function Contact() {
       </div>
 
       <div className="shell">
-        <SectionMarker index="05" label="Contato" />
+        <SectionMarker index="06" label="Contato" />
 
         <RevealLines
           as="h2"

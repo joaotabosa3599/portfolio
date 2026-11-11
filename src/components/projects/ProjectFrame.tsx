@@ -49,7 +49,7 @@ export function ProjectFrame({
           <span className="truncate">{projectDomain(project)}</span>
         </span>
         <span className="flex shrink-0 items-center gap-1.5">
-          <span aria-hidden="true" className={cn('size-1.5 rounded-full', status.live ? 'bg-success' : 'bg-warm')} />
+          <span aria-hidden="true" className={cn('size-1.5 rounded-full', status.live ? 'bg-success' : 'bg-text-muted')} />
           <span className="max-sm:sr-only">{status.label}</span>
         </span>
       </div>

@@ -22,9 +22,9 @@ const facts: { term: string; value: string; detail?: string }[] = [
  */
 export function About() {
   return (
-    <section id="sobre" aria-labelledby="sobre-title" className="section-y relative border-y border-border bg-bg-secondary">
+    <section id="sobre" aria-labelledby="sobre-title" className="section-y relative">
       <div className="shell">
-        <SectionMarker index="02" label="Sobre" />
+        <SectionMarker index="03" label="Sobre" />
 
         <div className="grid-editorial mt-12 gap-y-14 sm:mt-16">
           <aside className="relative order-2 col-span-4 md:col-span-8 lg:order-none lg:col-span-4 lg:pr-10">
@@ -56,7 +56,7 @@ export function About() {
 
           <div className="col-span-4 md:col-span-8 lg:col-span-7 lg:col-start-6">
             <div id="sobre-title">
-              <SectionTitle lines={['Penso o produto', 'inteiro.']} />
+              <SectionTitle lines={['Penso o produto', <><span className="text-brand-light">inteiro</span>.</>]} />
             </div>
 
             <FadeIn delay={0.1}>
@@ -69,7 +69,8 @@ export function About() {
             <div className="mt-8 grid gap-6 text-base leading-relaxed text-text-secondary md:grid-cols-2 md:gap-8">
               <FadeIn delay={0.15} as="p">
                 Hoje penso em produto de ponta a ponta: da modelagem do schema até a última animação da interface. Na RF
-                Group, isso são serviços compartilhados pelo grupo inteiro, com a fronteira de acesso decidida no banco.
+                Group, isso são serviços compartilhados pelo grupo inteiro, com a fronteira de acesso decidida no banco,
+                e automações: um bot de WhatsApp para os clientes e um robô que lê o sistema de processos pela equipe.
               </FadeIn>
               <FadeIn delay={0.2} as="p">
                 Gosto de unir design minimalista com engenharia sólida: código fácil de ler tanto quanto de usar. O

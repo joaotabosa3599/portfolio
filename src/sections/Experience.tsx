@@ -19,15 +19,15 @@ export function Experience() {
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.5 })
 
   return (
-    <section id="experiencia" aria-labelledby="experiencia-title" className="section-y border-y border-border bg-bg-secondary">
+    <section id="experiencia" aria-labelledby="experiencia-title" className="section-y">
       <div className="shell">
-        <SectionMarker index="04" label="Experiência" />
+        <SectionMarker index="05" label="Experiência" />
 
         <div className="grid-editorial mt-12 gap-y-16 sm:mt-16">
           <div className="col-span-4 md:col-span-8 lg:col-span-4">
             <div className="lg:sticky lg:top-28">
               <div id="experiencia-title">
-                <SectionTitle lines={['Trajetória', 'até aqui.']} />
+                <SectionTitle lines={['Trajetória', <>até <span className="text-brand-light">aqui</span>.</>]} />
               </div>
               <FadeIn delay={0.12}>
                 <p className="mt-8 max-w-sm text-base leading-relaxed text-text-secondary">
@@ -82,7 +82,7 @@ function TimelineItem({ entry }: { entry: ExperienceEntry }) {
         <span
           className={cn(
             'size-[9px] rotate-45 border transition-[background-color,border-color,scale] duration-[var(--dur-component)] ease-premium',
-            reached ? 'scale-125 border-brand bg-brand' : 'border-border-strong bg-bg-secondary',
+            reached ? 'scale-125 border-brand bg-brand' : 'border-border-strong bg-bg',
           )}
         />
       </span>

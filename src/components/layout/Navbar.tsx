@@ -80,14 +80,14 @@ export function Navbar() {
                       onFocus={() => setHovered(id)}
                       onBlur={() => setHovered(null)}
                       className={cn(
-                        'relative flex h-10 items-center gap-2 rounded-sm px-3.5 text-sm transition-colors duration-[var(--dur-hover)]',
+                        'relative flex h-10 items-center gap-2 rounded-sm px-2.5 text-sm lg:px-3.5 transition-colors duration-[var(--dur-hover)]',
                         active || hovered === id ? 'text-text' : 'text-text-secondary',
                       )}
                     >
                       <Deco
                         text={item.index}
                         className={cn(
-                          'font-mono text-[0.6875rem] transition-colors duration-[var(--dur-hover)]',
+                          'hidden font-mono text-[0.6875rem] transition-colors duration-[var(--dur-hover)] lg:inline',
                           active ? 'text-brand-light' : 'text-text-muted',
                         )}
                       />
@@ -97,7 +97,7 @@ export function Navbar() {
                           layoutId="nav-indicator"
                           transition={SPRING.indicator}
                           className={cn(
-                            'absolute inset-x-3.5 -bottom-px h-px',
+                            'absolute inset-x-2.5 -bottom-px h-px lg:inset-x-3.5',
                             active ? 'bg-brand' : 'bg-text-muted',
                           )}
                         />

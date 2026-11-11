@@ -39,8 +39,8 @@ export const capabilities: Capability[] = [
     title: 'Lógica e integração',
     principle:
       'Autorização na fronteira, não na tela: RPCs security definer, API keys com digest, webhooks assinados e sincronização entre sistemas.',
-    tech: ['TypeScript', 'Node.js', 'APIs REST', 'Supabase Auth', 'RPCs security definer', 'HMAC-SHA256', 'Zustand'],
-    evidence: ['mapa-disc', 'connect-valley', 'central-chamados', 'constela-orion'],
+    tech: ['TypeScript', 'Node.js', 'Python', 'APIs REST', 'Supabase Auth', 'RPCs security definer', 'HMAC-SHA256', 'Selenium', 'WhatsApp (Baileys)'],
+    evidence: ['mapa-disc', 'central-chamados', 'bot-previdenciario', 'bot-relatorio'],
   },
   {
     id: 'interface',

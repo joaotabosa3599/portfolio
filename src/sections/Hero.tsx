@@ -103,7 +103,8 @@ export function Hero() {
             className="mt-8 max-w-[34rem] text-base leading-relaxed text-text-secondary sm:mt-10 sm:text-lg"
           >
             Estudante de Engenharia da Computação na UFC e estagiário de desenvolvimento na RF Group. Modelo o schema,
-            fecho a fronteira de acesso no banco e levo o produto até a última interação da interface.
+            fecho a fronteira de acesso no banco e levo o produto até a última interação da interface. Também faço bots
+            de WhatsApp e robôs que tiram o trabalho repetido da equipe.
           </motion.p>
 
           <motion.div {...enter(HERO_SEQUENCE.actions, 10)} className="mt-10 flex flex-wrap items-center gap-3 sm:gap-4">

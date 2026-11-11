@@ -10,7 +10,7 @@ import { FadeIn } from '@/components/ui/Reveal'
 import { projects } from '@/data/projects'
 import { useActiveSection } from '@/hooks/useActiveSection'
 import { DUR, EASE } from '@/lib/motion'
-import { pad, projectMeta, projectStatus } from '@/lib/project'
+import { isAutomation, pad, projectMeta, projectStatus } from '@/lib/project'
 import { cn } from '@/lib/utils'
 import type { CaseStudy, Project } from '@/types/project'
 
@@ -64,9 +64,12 @@ export function ProjectCasePage() {
     <article className="pb-24 pt-28 sm:pt-36">
       <div className="shell">
         <motion.nav {...enter(0)} aria-label="Trilha" className="flex items-center gap-3 font-mono text-xs text-text-secondary">
-          <Link to="/#projetos" className="group inline-flex items-center gap-2 transition-colors hover:text-text">
+          <Link
+            to={isAutomation(project) ? '/#automacoes' : '/#projetos'}
+            className="group inline-flex items-center gap-2 transition-colors hover:text-text"
+          >
             <ArrowLeft size={14} aria-hidden="true" className="transition-transform duration-[var(--dur-hover)] group-hover:-translate-x-0.5" />
-            <span className="link-draw">Projetos</span>
+            <span className="link-draw">{isAutomation(project) ? 'Automações' : 'Projetos'}</span>
           </Link>
           <span aria-hidden="true">/</span>
           <span className="text-text" aria-current="page">
@@ -104,7 +107,7 @@ export function ProjectCasePage() {
             <dl className="border-t border-border text-sm">
               <Meta term="Status">
                 <span className="inline-flex items-center gap-2">
-                  <span aria-hidden="true" className={cn('size-1.5 rounded-full', status.live ? 'bg-success' : 'bg-warm')} />
+                  <span aria-hidden="true" className={cn('size-1.5 rounded-full', status.live ? 'bg-success' : 'bg-text-muted')} />
                   {status.label}
                 </span>
               </Meta>
@@ -133,7 +136,11 @@ export function ProjectCasePage() {
               {!project.links.live && !project.links.github && (
                 <p className="inline-flex items-center gap-2 text-sm text-text-secondary">
                   <Lock size={14} aria-hidden="true" />
-                  {project.kind === 'corporate' ? 'Projeto corporativo, sem acesso público' : 'Repositório privado, em desenvolvimento'}
+                  {project.kind === 'corporate'
+                    ? 'Projeto corporativo, sem acesso público'
+                    : project.inProgress
+                      ? 'Repositório privado, em desenvolvimento'
+                      : 'Repositório privado'}
                 </p>
               )}
             </div>

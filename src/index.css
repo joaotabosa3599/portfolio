@@ -55,9 +55,9 @@
 :root {
   /* Superfícies */
   --background-primary: #09090d;
-  --background-secondary: #0e0f15;
-  --surface-primary: #14151d;
-  --surface-elevated: #1b1c27;
+  --background-secondary: #111119;
+  --surface-primary: #171822;
+  --surface-elevated: #1e1f2b;
   --border-subtle: #252632;
   --border-emphasis: #38394c;
 
@@ -112,9 +112,9 @@
 
 @theme {
   --color-bg: #09090d;
-  --color-bg-secondary: #0e0f15;
-  --color-surface: #14151d;
-  --color-surface-elevated: #1b1c27;
+  --color-bg-secondary: #111119;
+  --color-surface: #171822;
+  --color-surface-elevated: #1e1f2b;
   --color-border: #252632;
   --color-border-strong: #38394c;
 

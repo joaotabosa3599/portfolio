@@ -344,7 +344,7 @@ function Table({ name, columns, x, y, highlight }: { name: string; columns: stri
       <ul className="space-y-[3px] px-1.5 py-1.5">
         {columns.map((column, i) => (
           <li key={column} className="flex items-center gap-1 font-mono text-[6.5px] leading-none text-text-secondary/80">
-            <span className={cn('size-[3px] rounded-[1px]', i === 0 ? 'bg-warm/80' : 'bg-white/20')} />
+            <span className={cn('size-[3px] rounded-[1px]', i === 0 ? 'bg-brand-light/80' : 'bg-white/20')} />
             {column}
           </li>
         ))}
@@ -394,10 +394,10 @@ function ApplicationContent() {
       <Service name="webhook" detail="hmac · ±300s" x={124} y={86} />
       <div className="absolute inset-x-3.5 bottom-3 space-y-[5px] font-mono text-[7px] leading-none">
         <p className="text-text-secondary">
-          <span className="text-cool">rpc</span> emit_assessment(api_key, person_ref)
+          <span className="text-brand-light">rpc</span> emit_assessment(api_key, person_ref)
         </p>
         <p className="text-text-secondary">
-          <span className="text-cool">post</span> /webhooks · dedupe · backoff
+          <span className="text-brand-light">post</span> /webhooks · dedupe · backoff
         </p>
       </div>
     </>

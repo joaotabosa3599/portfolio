@@ -3,10 +3,11 @@ import { ProjectIndex } from '@/components/projects/ProjectIndex'
 import { FadeIn } from '@/components/ui/Reveal'
 import { SectionMarker, SectionTitle } from '@/components/ui/SectionHeading'
 import { projects } from '@/data/projects'
-import { pad } from '@/lib/project'
+import { isAutomation, pad } from '@/lib/project'
 
-const showcase = projects.filter((project) => project.showcase)
-const others = projects.filter((project) => !project.showcase)
+const web = projects.filter((project) => !isAutomation(project))
+const showcase = web.filter((project) => project.showcase)
+const others = web.filter((project) => !project.showcase)
 
 /**
  * Composição da galeria a partir da ordem dos dados: o primeiro é o destaque,
@@ -30,11 +31,11 @@ export function Projects() {
   return (
     <section id="projetos" aria-labelledby="projetos-title" className="section-y relative">
       <div className="shell">
-        <SectionMarker index="01" label="Projetos" aside={`${pad(projects.length)} projetos`} />
+        <SectionMarker index="01" label="Produtos web" aside={`${pad(web.length)} projetos`} />
 
         <div className="grid-editorial mt-12 gap-y-8 sm:mt-16">
           <div id="projetos-title" className="col-span-4 md:col-span-8 lg:col-span-8">
-            <SectionTitle lines={['Sistemas reais,', 'do schema ao pixel.']} indent />
+            <SectionTitle lines={['Sistemas reais,', <>do schema ao <span className="text-brand-light">pixel</span>.</>]} indent />
           </div>
           <FadeIn delay={0.15} className="col-span-4 self-end md:col-span-6 lg:col-span-4 lg:pb-3">
             <p className="text-base leading-relaxed text-text-secondary sm:text-lg">
@@ -82,7 +83,7 @@ export function Projects() {
                 <p className="mt-2 text-sm text-text-secondary">Avaliações técnicas, processos seletivos e estudos.</p>
               </FadeIn>
               <FadeIn as="p" className="font-mono text-xs text-text-secondary">
-                {pad(total + 1)}–{pad(projects.length)}
+                {pad(total + 1)}–{pad(web.length)}
               </FadeIn>
             </div>
             <ProjectIndex projects={others} offset={total} />

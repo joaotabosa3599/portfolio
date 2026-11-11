@@ -1,4 +1,4 @@
-export type ProjectCategory = 'E-commerce' | 'Web App' | 'SaaS' | 'Landing Page' | 'Ferramenta' | 'Jogo'
+export type ProjectCategory = 'E-commerce' | 'Web App' | 'SaaS' | 'Landing Page' | 'Ferramenta' | 'Jogo' | 'Automação'
 
 export interface ProjectLinks {
   github?: string
@@ -59,6 +59,12 @@ export interface Project {
   /** Rótulo curto do tipo de trabalho, exibido junto da categoria. */
   kindLabel?: string
   brief?: ProjectBrief
+  /** Em que parte da home o projeto aparece: produtos web (padrão) ou automações. */
+  area?: 'web' | 'automacao'
+  /** Texto da barra da moldura quando não há domínio público (ex.: "WhatsApp · demonstração"). */
+  frameLabel?: string
+  /** Status explícito, quando os campos de link não contam a história (ex.: uso interno). */
+  statusLabel?: { label: string; live: boolean }
   highlight?: ProjectHighlight
   caseStudy?: CaseStudy
 }

@@ -17,11 +17,11 @@ export function Capabilities() {
   return (
     <section id="stack" aria-labelledby="stack-title" className="section-y relative">
       <div className="shell">
-        <SectionMarker index="03" label="Stack" aside="03 camadas" />
+        <SectionMarker index="04" label="Stack" aside="03 camadas" />
 
         <div className="grid-editorial mt-12 gap-y-8 sm:mt-16">
           <div id="stack-title" className="col-span-4 md:col-span-8 lg:col-span-6">
-            <SectionTitle lines={['Como eu', 'construo.']} />
+            <SectionTitle lines={['Como eu', <><span className="text-brand-light">construo</span>.</>]} />
           </div>
           <FadeIn delay={0.15} className="col-span-4 self-end md:col-span-6 lg:col-span-5 lg:col-start-8 lg:pb-3">
             <p className="text-base leading-relaxed text-text-secondary sm:text-lg">

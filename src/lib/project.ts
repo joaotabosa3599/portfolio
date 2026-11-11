@@ -4,11 +4,13 @@ import type { Project } from '@/types/project'
 /** Domínio exibido na barra da moldura — o real, quando há deploy público. */
 export function projectDomain(project: Project) {
   if (project.links.live) return project.links.live.replace(/^https?:\/\//, '').replace(/\/$/, '')
+  if (project.frameLabel) return project.frameLabel
   return 'privado · em desenvolvimento'
 }
 
 /** Status a partir dos dados: nada é afirmado além do que o projeto registra. */
 export function projectStatus(project: Project) {
+  if (project.statusLabel) return project.statusLabel
   if (project.inProgress && project.links.live) return { label: 'No ar · em desenvolvimento', live: true }
   if (project.inProgress) return { label: 'Em desenvolvimento', live: false }
   if (project.links.live) return { label: 'No ar', live: true }
@@ -21,6 +23,11 @@ export function projectMeta(project: Project) {
 
 export function pad(value: number) {
   return String(value).padStart(2, '0')
+}
+
+/** Projetos da seção de automações; o resto é produto web. */
+export function isAutomation(project: Project) {
+  return project.area === 'automacao'
 }
 
 export function findProject(slug: string) {

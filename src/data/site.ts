@@ -1,7 +1,7 @@
 export const site = {
   name: 'João Tabosa',
-  role: 'Full-Stack Developer',
-  tagline: 'Produtos inteiros, do banco de dados à interface.',
+  role: 'Full-Stack & Automações',
+  tagline: 'Produtos inteiros, do banco de dados à interface, e robôs que tiram o trabalho repetido da equipe.',
   status: 'Aberto a novas oportunidades',
   email: 'joao.tabosa3599@gmail.com',
   location: 'Brasil',
@@ -11,9 +11,10 @@ export const site = {
   },
   nav: [
     { label: 'Projetos', href: '#projetos', index: '01' },
-    { label: 'Sobre', href: '#sobre', index: '02' },
-    { label: 'Stack', href: '#stack', index: '03' },
-    { label: 'Experiência', href: '#experiencia', index: '04' },
-    { label: 'Contato', href: '#contato', index: '05' },
+    { label: 'Automações', href: '#automacoes', index: '02' },
+    { label: 'Sobre', href: '#sobre', index: '03' },
+    { label: 'Stack', href: '#stack', index: '04' },
+    { label: 'Experiência', href: '#experiencia', index: '05' },
+    { label: 'Contato', href: '#contato', index: '06' },
   ],
 } as const
