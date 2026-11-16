@@ -25,7 +25,7 @@ export const projects: Project[] = [
     inProgress: true,
     tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'Tailwind CSS', 'Three.js'],
     links: {
-      live: 'https://liquid-journal-trading-app.vercel.app/',
+      live: 'https://debrief-trade.vercel.app/',
     },
     accent: 'emerald',
     visual: 'saas',
